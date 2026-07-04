@@ -1,3 +1,12 @@
+# MeetRoom
+
+[![Markdown Link Check](https://github.com/sikakou54/system-document-template/actions/workflows/markdown-link-check.yml/badge.svg)](https://github.com/sikakou54/system-document-template/actions/workflows/markdown-link-check.yml)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-Workers_Pages_D1-F38020?logo=cloudflare&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-metered_billing-635BFF?logo=stripe&logoColor=white)
+![Resend](https://img.shields.io/badge/Resend-Email-000000?logo=resend&logoColor=white)
+
+社内会議室予約プロダクト MeetRoom の要件定義・機能設計ドキュメント一式。リポジトリ全体の入口は [../README.md](../README.md)。
+
 ## 1. プロダクト概要
 
 MeetRoom は、社内の会議室を探す・予約する・利用状況を把握する業務を、ひとつの流れで扱えるようにする会議室予約プロダクトである。
