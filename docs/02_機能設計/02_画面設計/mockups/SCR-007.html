@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1024px; height: 640px; }
+  body {
+    font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: #eef1f5; color: #1f2733; -webkit-font-smoothing: antialiased;
+  }
+  .browser { width: 1024px; height: 640px; background: #fff; display: flex; flex-direction: column; }
+  .chrome { height: 40px; background: #dfe3e9; display: flex; align-items: center; gap: 8px; padding: 0 14px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+  .url { flex: 1; margin-left: 10px; height: 24px; background: #fff; border-radius: 12px;
+    display: flex; align-items: center; padding: 0 14px; color: #6b7280; font-size: 12px; }
+  .appbar { height: 56px; background: #2563eb; color: #fff; display: flex; align-items: center;
+    padding: 0 24px; gap: 16px; }
+  .brand { font-weight: 700; font-size: 17px; letter-spacing: .3px; }
+  .appbar .title { font-size: 14px; opacity: .9; border-left: 1px solid rgba(255,255,255,.4); padding-left: 16px; }
+  .avatar { margin-left: auto; width: 30px; height: 30px; border-radius: 50%; background: #93c5fd;
+    display: flex; align-items: center; justify-content: center; font-size: 12px; color: #1e3a8a; font-weight: 700; }
+  .content { padding: 22px 24px; }
+  .banner { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; border-radius: 8px;
+    padding: 11px 16px; font-size: 12px; margin-bottom: 16px; }
+  .top { display: flex; gap: 16px; margin-bottom: 18px; }
+  .card { background: #fff; border: 1px solid #e2e6ec; border-radius: 10px; padding: 16px 18px;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  .card.contract { width: 300px; display: flex; flex-direction: column; }
+  .card .cap { font-size: 11px; color: #6b7280; margin-bottom: 8px; }
+  .badge { display: inline-block; align-self: flex-start; background: #fef3c7; color: #b45309;
+    font-size: 12px; font-weight: 700; border-radius: 6px; padding: 4px 12px; margin-bottom: 14px; }
+  .btn { height: 40px; border-radius: 7px; font-size: 13px; font-weight: 700; background: #2563eb; color: #fff;
+    border: none; display: inline-flex; align-items: center; justify-content: center; padding: 0 20px; }
+  .metric { flex: 1; }
+  .metric .cap { font-size: 11px; color: #6b7280; margin-bottom: 6px; }
+  .metric .big { font-size: 26px; font-weight: 700; color: #1f2733; }
+  .metric .big small { font-size: 13px; color: #6b7280; font-weight: 600; margin-left: 4px; }
+  .head { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e2e6ec;
+    border-radius: 10px; overflow: hidden; font-size: 13px; }
+  th { text-align: left; background: #f7f9fc; color: #6b7280; font-weight: 600; font-size: 11px;
+    padding: 10px 16px; border-bottom: 1px solid #e2e6ec; }
+  th.num, td.num { text-align: right; }
+  td { padding: 12px 16px; border-bottom: 1px solid #eef1f5; }
+  tr:last-child td { border-bottom: none; }
+  .st { display: inline-block; border-radius: 5px; padding: 2px 10px; font-size: 11px; font-weight: 600; }
+  .st.paid { background: #ecfdf5; color: #059669; }
+  .st.open { background: #e0f2fe; color: #0369a1; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="url">https://meetroom.example/billing</span>
+    </div>
+    <div class="appbar">
+      <span class="brand">MeetRoom</span>
+      <span class="title">支払い方法・請求</span>
+      <span class="avatar">山</span>
+    </div>
+    <div class="content">
+      <div class="banner">この会議室は有料です。利用時間に応じて従量課金されます。</div>
+      <div class="top">
+        <div class="card contract">
+          <div class="cap">支払い方法（契約状態）</div>
+          <span class="badge">未契約</span>
+          <span class="btn">支払い方法を登録</span>
+        </div>
+        <div class="card metric">
+          <div class="cap">当月利用量</div>
+          <div class="big">360<small>分</small></div>
+        </div>
+        <div class="card metric">
+          <div class="cap">当月請求見込み</div>
+          <div class="big">¥3,000</div>
+        </div>
+      </div>
+      <div class="head">請求履歴</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34%">請求対象月</th>
+            <th class="num" style="width:33%">請求金額</th>
+            <th style="width:33%">請求ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2026-06</td><td class="num">¥4,500</td><td><span class="st paid">支払済</span></td></tr>
+          <tr><td>2026-05</td><td class="num">¥2,000</td><td><span class="st paid">支払済</span></td></tr>
+          <tr><td>2026-04</td><td class="num">¥3,500</td><td><span class="st open">請求済</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

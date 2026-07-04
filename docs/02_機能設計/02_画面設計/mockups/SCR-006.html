@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1024px; height: 600px; }
+  body {
+    font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: #eef1f5; color: #1f2733; -webkit-font-smoothing: antialiased;
+  }
+  .browser { width: 1024px; height: 600px; background: #fff; display: flex; flex-direction: column; }
+  .chrome { height: 40px; background: #dfe3e9; display: flex; align-items: center; gap: 8px; padding: 0 14px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+  .url { flex: 1; margin-left: 10px; height: 24px; background: #fff; border-radius: 12px;
+    display: flex; align-items: center; padding: 0 14px; color: #6b7280; font-size: 12px; }
+  .appbar { height: 56px; background: #1e293b; color: #fff; display: flex; align-items: center;
+    padding: 0 24px; gap: 16px; }
+  .brand { font-weight: 700; font-size: 17px; letter-spacing: .3px; }
+  .appbar .title { font-size: 14px; opacity: .9; border-left: 1px solid rgba(255,255,255,.4); padding-left: 16px; }
+  .admin { margin-left: 14px; font-size: 11px; background: #334155; padding: 3px 10px; border-radius: 5px; }
+  .avatar { margin-left: auto; width: 30px; height: 30px; border-radius: 50%; background: #64748b;
+    display: flex; align-items: center; justify-content: center; font-size: 12px; color: #f1f5f9; font-weight: 700; }
+  .content { padding: 24px; }
+  .card { background: #fff; border: 1px solid #e2e6ec; border-radius: 10px; padding: 16px 20px;
+    display: flex; align-items: flex-end; gap: 16px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  .field label { display: block; font-size: 11px; color: #6b7280; margin-bottom: 5px; }
+  .req { color: #dc2626; margin-left: 3px; }
+  .inp { height: 38px; border: 1px solid #cbd2dc; border-radius: 7px; background: #fff; width: 200px;
+    display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #1f2733; }
+  .btn { height: 38px; border-radius: 7px; font-size: 13px; font-weight: 700; background: #2563eb; color: #fff;
+    border: none; display: inline-flex; align-items: center; justify-content: center; padding: 0 24px; }
+  .results { margin-top: 22px; }
+  .head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+  .head h2 { font-size: 15px; font-weight: 700; }
+  .head .count { font-size: 12px; color: #6b7280; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e2e6ec;
+    border-radius: 10px; overflow: hidden; font-size: 13px; }
+  th { text-align: left; background: #f7f9fc; color: #6b7280; font-weight: 600; font-size: 11px;
+    padding: 11px 16px; border-bottom: 1px solid #e2e6ec; }
+  th.num, td.num { text-align: right; }
+  td { padding: 13px 16px; border-bottom: 1px solid #eef1f5; }
+  tr:last-child td { border-bottom: none; }
+  td.name { font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="url">https://meetroom.example/admin/reports</span>
+    </div>
+    <div class="appbar">
+      <span class="brand">MeetRoom</span>
+      <span class="title">利用実績</span>
+      <span class="admin">管理者</span>
+      <span class="avatar">総</span>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="field"><label>対象月<span class="req">*</span></label><div class="inp">2026-06</div></div>
+        <span class="btn">表示</span>
+      </div>
+      <div class="results">
+        <div class="head"><h2>会議室別 利用実績（2026-06）</h2><span class="count">4 件</span></div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40%">会議室</th>
+              <th class="num" style="width:30%">予約件数</th>
+              <th class="num" style="width:30%">利用時間（分）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="name">会議室A</td><td class="num">18</td><td class="num">1,080</td></tr>
+            <tr><td class="name">会議室B</td><td class="num">12</td><td class="num">720</td></tr>
+            <tr><td class="name">大会議室</td><td class="num">7</td><td class="num">840</td></tr>
+            <tr><td class="name">応接室</td><td class="num">4</td><td class="num">240</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

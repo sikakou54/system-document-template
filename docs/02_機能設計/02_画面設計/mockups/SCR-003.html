@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1024px; height: 600px; }
+  body {
+    font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: #eef1f5; color: #1f2733; -webkit-font-smoothing: antialiased;
+  }
+  .browser { width: 1024px; height: 600px; background: #fff; display: flex; flex-direction: column; }
+  .chrome { height: 40px; background: #dfe3e9; display: flex; align-items: center; gap: 8px; padding: 0 14px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+  .url { flex: 1; margin-left: 10px; height: 24px; background: #fff; border-radius: 12px;
+    display: flex; align-items: center; padding: 0 14px; color: #6b7280; font-size: 12px; }
+  .appbar { height: 56px; background: #2563eb; color: #fff; display: flex; align-items: center;
+    padding: 0 24px; gap: 16px; }
+  .brand { font-weight: 700; font-size: 17px; letter-spacing: .3px; }
+  .appbar .title { font-size: 14px; opacity: .9; border-left: 1px solid rgba(255,255,255,.4); padding-left: 16px; }
+  .avatar { margin-left: auto; width: 30px; height: 30px; border-radius: 50%; background: #93c5fd;
+    display: flex; align-items: center; justify-content: center; font-size: 12px; color: #1e3a8a; font-weight: 700; }
+  .content { padding: 26px 24px; display: flex; justify-content: center; }
+  .panel { width: 560px; }
+  .card { background: #fff; border: 1px solid #e2e6ec; border-radius: 10px; padding: 8px 22px;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  .card h2 { font-size: 13px; color: #374151; font-weight: 700; padding: 14px 0 4px; }
+  .row { display: flex; align-items: center; padding: 13px 0; border-bottom: 1px solid #eef1f5; }
+  .row:last-child { border-bottom: none; }
+  .row .lbl { width: 130px; font-size: 12px; color: #6b7280; }
+  .row .val { font-size: 14px; font-weight: 600; color: #1f2733; }
+  .req { color: #dc2626; margin-left: 3px; }
+  .textinput { flex: 1; height: 38px; border: 1px solid #cbd2dc; border-radius: 7px; background: #fff;
+    display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #9aa3af; }
+  .hint { font-size: 11px; color: #9aa3af; margin: 6px 0 2px 130px; }
+  .actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 22px; }
+  .btn { height: 40px; border-radius: 7px; font-size: 14px; font-weight: 600; display: inline-flex;
+    align-items: center; justify-content: center; padding: 0 26px; border: 1px solid transparent; }
+  .btn.primary { background: #2563eb; color: #fff; }
+  .btn.ghost { background: #fff; color: #475569; border-color: #cbd2dc; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="url">https://meetroom.example/reservations/new</span>
+    </div>
+    <div class="appbar">
+      <span class="brand">MeetRoom</span>
+      <span class="title">予約登録</span>
+      <span class="avatar">山</span>
+    </div>
+    <div class="content">
+      <div class="panel">
+        <div class="card">
+          <h2>予約内容</h2>
+          <div class="row"><span class="lbl">会議室名</span><span class="val">会議室A</span></div>
+          <div class="row"><span class="lbl">利用日</span><span class="val">2026-07-10</span></div>
+          <div class="row"><span class="lbl">利用時間</span><span class="val">10:00 〜 11:00</span></div>
+          <div class="row">
+            <span class="lbl">タイトル<span class="req">*</span></span>
+            <span class="textinput">例) 定例ミーティング</span>
+          </div>
+        </div>
+        <div class="hint">100文字以内で入力してください</div>
+        <div class="actions">
+          <span class="btn ghost">戻る</span>
+          <span class="btn primary">予約する</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
