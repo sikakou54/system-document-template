@@ -9,7 +9,7 @@
 | MOD-001 | 認証サービス(AuthService) | Service | ログイン時の資格情報検証と JWT の発行、および JWT の検証 |
 | MOD-002 | 会議室検索サービス(RoomSearchService) | Service | 条件に合う空き会議室の抽出(空き判定)と会議室詳細の取得 |
 | MOD-003 | 予約サービス(ReservationService) | Service | 予約の登録・変更・キャンセル。二重予約チェックを含む |
-| MOD-004 | 会議室管理サービス(RoomManagementService) | Service | 会議室(利用単価)・設備の登録編集と設備一覧の取得 |
-| MOD-005 | 利用実績サービス(UsageReportService) | Service | 完了予約の月次利用実績の集計・保存・取得 |
+| MOD-004 | 会議室管理サービス(RoomManagementService) | Service | 会議室(利用単価)・設備の登録編集、会議室一覧(利用停止含む)・設備一覧の取得、設備の登録 |
+| MOD-005 | 利用実績サービス(UsageReportService) | Service | 完了予約の月次利用実績の集計・保存・取得、予約の利用時間算出 |
 | MOD-006 | 通知サービス(NotificationService) | Service | リマインド対象抽出・メール送信・送信状態更新 |
 | MOD-007 | 課金サービス(BillingService) | Service | 支払い方法登録・Stripe Webhook 処理・利用量計上・請求状態管理 |
