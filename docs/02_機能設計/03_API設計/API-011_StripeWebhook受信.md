@@ -116,11 +116,11 @@ Stripe-Signature ヘッダと受信ペイロードを検証し、正当であれ
 
 | イベント種別 | 処理内容 | 更新対象 |
 |---|---|---|
-| checkout.session.completed | 契約を有効化する。STRIPE_SUBSCRIPTION_ID を保存し、BILLING_STATUS を有効(2)に更新 | TBL-001 |
-| customer.subscription.updated | サブスクリプションの状態を反映し BILLING_STATUS を更新(有効(2)／停止(3)) | TBL-001 |
-| customer.subscription.deleted | 契約を停止する。BILLING_STATUS を停止(3)に更新 | TBL-001 |
-| invoice.paid | 請求を支払済に更新(STATUS=支払済(3)) | TBL-008 |
-| invoice.payment_failed | 請求を失敗に更新(STATUS=失敗(4)) | TBL-008 |
+| checkout.session.completed | STRIPE_SUBSCRIPTION_ID を保存し、DEF-001/SET-001 に更新 | TBL-001 |
+| customer.subscription.updated | サブスクリプションの状態に応じて DEF-001/CODE-002 を更新 | TBL-001 |
+| customer.subscription.deleted | DEF-001/SET-002 に更新 | TBL-001 |
+| invoice.paid | DEF-001/SET-014 に更新 | TBL-008 |
+| invoice.payment_failed | DEF-001/SET-015 に更新 | TBL-008 |
 
 ## (4) 処理判定
 
