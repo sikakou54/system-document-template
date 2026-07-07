@@ -336,7 +336,7 @@ docs/
 │   ├── 08_シーケンス設計/       … SEQ-XXX ＋ index.md
 │   ├── 09_権限設計/           … PERM-XXX ＋ index.md
 │   └── 10_共通定義設計/       … DEF-XXX ＋ index.md
-├── 04_トレーサビリティ/         … BR/FR/UC/設計の対応表 ＋ index.md
+├── 04_トレーサビリティ/         … RQ/BR/FR/UC/設計の対応表 ＋ index.md
 └── 99_その他/
     ├── ID採番ルール.md   ← 本ファイル（採番の正本）
     ├── 用語集.md
