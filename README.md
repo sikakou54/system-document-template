@@ -3,7 +3,7 @@
 [![Markdown Link Check](https://github.com/sikakou54/system-document-template/actions/workflows/markdown-link-check.yml/badge.svg)](https://github.com/sikakou54/system-document-template/actions/workflows/markdown-link-check.yml)
 ![Format](https://img.shields.io/badge/format-Markdown-lightgrey?logo=markdown)
 
-要件定義・機能設計ドキュメントを、ID採番・トレーサビリティ・レビュー観点まで含めて標準化するための**ドキュメントテンプレート・リポジトリ**。
+企画・要求定義・要件定義・機能設計ドキュメントを、ID採番・トレーサビリティ・レビュー観点まで含めて標準化するための**ドキュメントテンプレート・リポジトリ**。
 再利用できる**テンプレート一式**(template/)と、それに従って書かれた**完成サンプル**(docs/ = 会議室予約プロダクト MeetRoom)を収録する。
 
 ## 構成
@@ -11,7 +11,7 @@
 | ディレクトリ | 役割 | 入口 |
 |---|---|---|
 | [template/](template/) | 新規プロジェクトへコピーして使う**テンプレート集**(文書種別ごとの雛形・運用ルール・採番ルール・プロンプト)。テンプレートの正本 | [template/README.md](template/README.md) |
-| [docs/](docs/) | テンプレートに従って書いた**サンプル**(MeetRoom の要件定義・機能設計一式)。記入例 | [docs/README.md](docs/README.md) |
+| [docs/](docs/) | テンプレートに従って書いた**サンプル**(MeetRoom の企画・要求定義・要件定義・機能設計一式)。記入例 | [docs/README.md](docs/README.md) |
 
 ## 使い方
 
