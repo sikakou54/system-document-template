@@ -2,18 +2,16 @@
 
 # 1. 概要
 
-MeetRoom の要求〜要件〜設計のトレース経路を対応表で一元管理する。
+MeetRoom の工程をまたぐトレース(要求→要件→設計)を対応表で一元管理する。
 リンクの正本は各文書のトレース欄・依存欄であり、本ディレクトリの各対応表は各文書の基本情報の転記で構成する(独自情報を書かない。docs/CLAUDE.md §6)。
-上流→下流／下流→上流の追跡は各対応表のフィルタで行う。
+要件定義層内の横断(FR→CFR/NFR・機能×データの CRUD 相関)は 02_要件定義/04_トレーサビリティ/、機能設計層内のトレース(SCR→API→MOD→TBL)は 03_機能設計/11_トレーサビリティ/ で管理する。
 
 # 2. 対応表一覧
 
 | ファイル | 対象経路 | 目的 |
 |---|---|---|
-| traceability_rq_fr.md | RQ→FR/CFR/NFR | 要求が実現要件へ落ちているかを追跡する |
-| traceability_uc_design.md | UC→SCR/API | 各システムユースケース(UC。各FR/CFR文書内に定義)を実現する画面・API を追跡する |
-| traceability_fr_nfr.md | FR→CFR/NFR | 機能要件に適用される共通機能要件(CFR)・非機能要件(NFR)を追跡する |
-| traceability_scr_api_db.md | SCR→API→MOD→TBL | 画面から API・モジュール・テーブルまでの実装連鎖を追跡する |
+| traceability_rq_fr.md | RQ→FR/CFR/NFR | 要求が実現要件へ落ちているかを追跡する（要求→要件） |
+| traceability_uc_design.md | UC→SCR/API | 各システムユースケース(UC。各FR/CFR文書内に定義)を実現する画面・API を追跡する（要件→設計） |
 
 # 3. 更新ルール
 

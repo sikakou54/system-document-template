@@ -212,7 +212,7 @@ CFR-002_認可・権限制御.md
 
 ## 8.2 対象範囲とトレース
 
-各 NFR は「対象範囲」で適用範囲（全機能 / システム全体 / 特定機能名）を示す。FR と NFR の適用関係は `04_トレーサビリティ/traceability_fr_nfr.md` で管理し、NFR 文書・FR 文書の双方に品質要求を重複記載しない。
+各 NFR は「対象範囲」で適用範囲（全機能 / システム全体 / 特定機能名）を示す。FR と NFR の適用関係は `02_要件定義/04_トレーサビリティ/traceability_fr_nfr.md` で管理し、NFR 文書・FR 文書の双方に品質要求を重複記載しない。
 
 ---
 
@@ -324,7 +324,8 @@ docs/
 ├── 02_要件定義/
 │   ├── 01_機能要件/            … CFR-000(親/一覧) ＋ CFR-XXX ＋ FR-XXX ＋ index.md（各FR/CFRにシステムユースケースUC-01を内包）
 │   ├── 02_非機能要件/          … NFR-XXX ＋ index.md
-│   └── 03_データモデル/          … MDL-XXX ＋ 概念ER図 ＋ index.md
+│   ├── 03_データモデル/          … MDL-XXX ＋ 概念ER図 ＋ index.md
+│   └── 04_トレーサビリティ/      … 要件定義層の横断(機能データCRUD相関・traceability_fr_nfr) ＋ index.md
 ├── 03_機能設計/
 │   ├── 01_概要設計/            … 01_システム概要図.md, 02_外部サービス連携.md
 │   ├── 02_画面設計/            … SCR-XXX(MSGはインライン) ＋ index.md ＋ mockups/
@@ -335,8 +336,9 @@ docs/
 │   ├── 07_クエリ設計/          … SQL-XXX ＋ index.md
 │   ├── 08_シーケンス設計/       … SEQ-XXX ＋ index.md
 │   ├── 09_権限設計/           … PERM-XXX ＋ index.md
-│   └── 10_共通定義設計/       … DEF-XXX ＋ index.md
-├── 04_トレーサビリティ/         … RQ/FR/UC/設計の対応表 ＋ index.md
+│   ├── 10_共通定義設計/       … DEF-XXX ＋ index.md
+│   └── 11_トレーサビリティ/     … SCR→API→MOD→TBL(traceability_scr_api_db) ＋ index.md
+├── 04_トレーサビリティ/         … 工程間トレース(RQ→要件→設計) ＋ index.md
 └── 99_その他/
     ├── ID採番ルール.md   ← 本ファイル（採番の正本）
     ├── 用語集.md
