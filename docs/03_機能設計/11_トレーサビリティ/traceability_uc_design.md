@@ -1,5 +1,3 @@
-# traceability_uc_design
-
 # 1. 概要
 
 システムユースケース(UC。各FR/CFR文書内に定義)を実現する画面(SCR)・API の対応を追跡する。
