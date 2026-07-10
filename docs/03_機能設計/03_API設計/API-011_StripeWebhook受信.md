@@ -38,7 +38,7 @@
 ```mermaid
 flowchart TD
   Start([開始])
-  P1["(1) Webhook反映"]
+  P1[["(1) Webhook反映"]]
   D1{"(2) Webhook反映判定"}
   E1["ERR-009 を返却"]
   P2["(3) 処理結果"]
