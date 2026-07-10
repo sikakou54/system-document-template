@@ -26,7 +26,10 @@
 
 # 4. クエリ
 
-会議室×対象月で UPSERT する。UX_USAGE_REPORTS_ROOM_MONTH(ROOM_ID, TARGET_MONTH)により、既存があれば件数・利用時間を更新、無ければ INSERT する。会議室ごとに実行する。
+会議室×対象月で UPSERT する。
+
+- UX_USAGE_REPORTS_ROOM_MONTH(ROOM_ID, TARGET_MONTH)により、既存があれば件数・利用時間を更新、無ければ INSERT する。
+- 会議室ごとに実行する。
 
 ```sql
 INSERT INTO T_USAGE_REPORTS (

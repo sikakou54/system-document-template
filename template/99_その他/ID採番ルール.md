@@ -69,7 +69,6 @@ ID採番・命名に関する判断は本ファイルを参照する（作業全
 | テーブル         | `TBL-XXX`      | テーブル単位の設計            | DB設計                  |
 | クエリ          | `SQL-XXX`      | クエリ単位の設計             | クエリ設計                 |
 | シーケンス        | `SEQ-XXX`      | 複数要素の時系列連携           | シーケンス設計               |
-| 権限           | `PERM-XXX`     | ロール・権限制御             | 権限設計                  |
 | エラー          | `ERR-XXX`      | エラー定義                | 各API文書＋API-COM にインライン定義 |
 | メッセージ        | `MSG-XXX`      | 表示・通知・エラーメッセージ       | 各SCR文書の「メッセージ一覧」節にインライン定義 |
 
@@ -334,9 +333,7 @@ docs/
 │   ├── 05_モジュール設計/       … MOD-XXX ＋ index.md
 │   ├── 06_データベース設計/     … TBL-XXX(RDB), ER図, 共通カラム, 命名規則 ＋ index.md
 │   ├── 07_クエリ設計/          … SQL-XXX ＋ index.md
-│   ├── 08_シーケンス設計/       … SEQ-XXX ＋ index.md
-│   ├── 09_権限設計/           … PERM-XXX ＋ index.md
-│   ├── 10_共通定義設計/       … DEF-XXX ＋ index.md
+│   ├── 08_シーケンス設計/       … SEQ-XXX ＋ index.md│   ├── 10_共通定義設計/       … DEF-XXX ＋ index.md
 │   └── 11_トレーサビリティ/     … 機能設計に関わるトレース(traceability_uc_design・traceability_scr_api_db) ＋ index.md
 └── 99_その他/
     ├── ID採番ルール.md   ← 本ファイル（採番の正本）

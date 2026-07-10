@@ -27,7 +27,10 @@
 
 # 4. クエリ
 
-Stripe請求ID(STRIPE_INVOICE_ID)で UPSERT する。UX_INVOICES_STRIPE により、既存があれば STATUS を更新、無ければ利用者・請求対象月・金額とともに INSERT する。冪等に処理する。
+Stripe請求ID(STRIPE_INVOICE_ID)で UPSERT する。
+
+- UX_INVOICES_STRIPE により、既存があれば STATUS を更新、無ければ利用者・請求対象月・金額とともに INSERT する。
+- 冪等に処理する。
 
 ```sql
 INSERT INTO T_INVOICES (
