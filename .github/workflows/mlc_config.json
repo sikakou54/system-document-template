@@ -1,5 +1,7 @@
 {
-  "ignorePatterns": [],
+  "ignorePatterns": [
+    { "pattern": "mockups/SCR-XXX\\.png" }
+  ],
   "replacementPatterns": [],
   "aliveStatusCodes": [200, 206, 429],
   "retryOn429": true,

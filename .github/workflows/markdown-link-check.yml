@@ -20,3 +20,11 @@ jobs:
           folder-path: 'docs'
           file-path: './README.md'
           file-extension: '.md'
+      - name: Check template Markdown links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'yes'
+          config-file: '.github/workflows/mlc_config.json'
+          folder-path: 'template'
+          file-extension: '.md'
