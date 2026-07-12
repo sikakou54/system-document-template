@@ -22,7 +22,7 @@
 | :stripe_invoice_id | Stripe請求ID | TEXT | Yes | Stripe の invoice ID。UX_INVOICES_STRIPE で一意 |
 | :billing_period | 請求対象月 | TEXT | Yes | 'YYYY-MM' 形式(新規時に設定) |
 | :amount | 請求金額 | INTEGER | Yes | 円(新規時に設定) |
-| :status | 請求ステータス | INTEGER | Yes | DEF-001/CODE-007 |
+| :status | 請求ステータス | INTEGER | Yes | 共通コード定義/CODE-007 |
 | :updated_at | 更新日時 | TEXT | Yes | ISO8601(UTC)。アプリで現在時刻を設定(共通カラム.md) |
 
 # 4. クエリ
@@ -36,7 +36,7 @@ Stripe請求ID(STRIPE_INVOICE_ID)で UPSERT する。
 INSERT INTO T_INVOICES (
   USER_ID, STRIPE_INVOICE_ID, BILLING_PERIOD, AMOUNT, STATUS
 ) VALUES (
-  :user_id, :stripe_invoice_id, :billing_period, :amount, :status   -- STATUS: DEF-001/CODE-007
+  :user_id, :stripe_invoice_id, :billing_period, :amount, :status   -- STATUS: 共通コード定義/CODE-007
 )
 ON CONFLICT (STRIPE_INVOICE_ID) DO UPDATE SET
   STATUS     = excluded.STATUS,
@@ -50,7 +50,7 @@ RETURNING ID, STRIPE_INVOICE_ID, STATUS;
 |---|---|---|---|
 | ID | 請求ID | INTEGER | 請求行の ID |
 | STRIPE_INVOICE_ID | Stripe請求ID | TEXT | Stripe の invoice ID |
-| STATUS | 請求ステータス | INTEGER | 反映後の請求ステータス(DEF-001/CODE-007) |
+| STATUS | 請求ステータス | INTEGER | 反映後の請求ステータス(共通コード定義/CODE-007) |
 
 # 6. 補足(性能・インデックス)
 
@@ -58,4 +58,4 @@ RETURNING ID, STRIPE_INVOICE_ID, STATUS;
 |---|---|
 | 利用インデックス | TBL-008/IDX-1(UX_INVOICES_STRIPE: STRIPE_INVOICE_ID) |
 | 想定件数 | 最大1件(1請求1行) |
-| 注意点 | ON CONFLICT の対象は一意インデックス UX_INVOICES_STRIPE。Webhook 再送でも同じ結果に収束する(冪等)。区分値は DEF-001/CODE-007。UPDATED_AT はアプリで現在時刻を設定する |
+| 注意点 | ON CONFLICT の対象は一意インデックス UX_INVOICES_STRIPE。Webhook 再送でも同じ結果に収束する(冪等)。区分値は 共通コード定義/CODE-007。UPDATED_AT はアプリで現在時刻を設定する |

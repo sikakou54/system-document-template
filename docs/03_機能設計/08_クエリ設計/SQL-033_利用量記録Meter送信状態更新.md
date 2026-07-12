@@ -20,7 +20,7 @@
 |---|---|---|---|---|
 | :id | 利用量記録ID | INTEGER | Yes | 更新対象の利用量記録 ID |
 | :stripe_meter_event_id | Stripe Meter Event ID | TEXT | No | 送信成功時に記録。失敗時は NULL |
-| :status | 計上ステータス | INTEGER | Yes | DEF-001/CODE-006 |
+| :status | 計上ステータス | INTEGER | Yes | 共通コード定義/CODE-006 |
 | :updated_at | 更新日時 | TEXT | Yes | ISO8601(UTC)。アプリで現在時刻を設定(共通カラム.md) |
 
 # 4. クエリ
@@ -30,7 +30,7 @@
 ```sql
 UPDATE T_USAGE_RECORDS
 SET STRIPE_METER_EVENT_ID = :stripe_meter_event_id,
-    STATUS                = :status,                 -- DEF-001/CODE-006
+    STATUS                = :status,                 -- 共通コード定義/CODE-006
     UPDATED_AT            = :updated_at
 WHERE ID = :id
   AND DELETED_AT IS NULL
@@ -42,7 +42,7 @@ RETURNING ID, STATUS, STRIPE_METER_EVENT_ID;
 | 列名 | 論理名 | 型 | 説明 |
 |---|---|---|---|
 | ID | 利用量記録ID | INTEGER | 利用量記録の ID |
-| STATUS | 計上ステータス | INTEGER | 更新後の計上ステータス(DEF-001/CODE-006) |
+| STATUS | 計上ステータス | INTEGER | 更新後の計上ステータス(共通コード定義/CODE-006) |
 | STRIPE_METER_EVENT_ID | Stripe Meter Event ID | TEXT | 送信成功時の Meter Event ID(失敗時 NULL) |
 
 # 6. 補足(性能・インデックス)
@@ -51,4 +51,4 @@ RETURNING ID, STATUS, STRIPE_METER_EVENT_ID;
 |---|---|
 | 利用インデックス | 主キー(ID)による一意更新 |
 | 想定件数 | 最大1件 |
-| 注意点 | 送信成功時は STRIPE_METER_EVENT_ID を設定し DEF-001/SET-012、失敗時は DEF-001/SET-013 とする(記録は残し JOB で再送対象)。UPDATED_AT はアプリで現在時刻を設定する |
+| 注意点 | 送信成功時は STRIPE_METER_EVENT_ID を設定し 共通コード定義/SET-012、失敗時は 共通コード定義/SET-013 とする(記録は残し JOB で再送対象)。UPDATED_AT はアプリで現在時刻を設定する |
