@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-007 変更履歴画面</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome" aria-hidden="true">
+      <div class="window-dots"><span></span><span></span><span></span></div>
+      <div class="browser-address">https://directory.example.com/employees/emp-000128/history</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">人事担当者</span>
+        <span class="user">佐藤 花子</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <div hidden data-itm-id="ITM-10"></div>
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-007 / CHANGE HISTORY</div>
+          <h1>変更履歴</h1>
+          <p>対象社員の変更履歴を期間・変更種別で絞り込みます。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-09</span>社員詳細へ戻る</button>
+        </div>
+      </div>
+
+      <section class="summary-strip" style="grid-template-columns:repeat(2,minmax(0,1fr));" aria-label="対象社員">
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-01</span> 社員番号</div>
+          <div class="value">E00128</div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-01</span> 氏名</div>
+          <div class="value">高橋 健太</div>
+        </div>
+      </section>
+
+      <section class="card compact">
+        <div class="card-title-row">
+          <h2 class="card-title">参照条件</h2>
+          <span class="card-note">1ページ 20件</span>
+        </div>
+        <div class="grid cols-4">
+          <div class="field">
+            <label><span class="itm">ITM-02</span>期間開始</label>
+            <div class="control"><span>2026/04/01</span><span class="muted">▣</span></div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-03</span>期間終了</label>
+            <div class="control"><span>2026/07/14</span><span class="muted">▣</span></div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-04</span>変更種別</label>
+            <div class="control select">すべて</div>
+          </div>
+          <div class="form-actions" style="align-self:end;">
+            <button class="btn ghost" type="button"><span class="itm">ITM-08</span>条件クリア</button>
+            <button class="btn primary" type="button"><span class="itm">ITM-07</span>参照</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="alert" role="status">
+        <span class="alert-icon">i</span>
+        <span><strong>表示順</strong>　変更日時の新しい順に表示しています。</span>
+      </div>
+
+      <section class="card mb-0">
+        <div class="table-tools">
+          <h2 class="card-title"><span class="itm">ITM-05</span> 変更履歴一覧</h2>
+          <div class="result-count"><span class="itm">ITM-06</span> 該当件数 <strong>47件</strong></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>変更日時</th>
+                <th>変更者</th>
+                <th>変更種別</th>
+                <th>概要</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2026/07/10 14:26</td>
+                <td>佐藤 花子</td>
+                <td><span class="badge info">基本情報更新</span></td>
+                <td>連絡先、メールアドレスを更新</td>
+              </tr>
+              <tr>
+                <td>2026/06/18 09:12</td>
+                <td>佐藤 花子</td>
+                <td><span class="badge future">異動</span></td>
+                <td>営業本部 第一営業部から事業推進本部へ異動</td>
+              </tr>
+              <tr>
+                <td>2026/05/01 10:03</td>
+                <td>管理者 一郎</td>
+                <td><span class="badge">ロール更新</span></td>
+                <td>社員ロールを更新</td>
+              </tr>
+              <tr>
+                <td>2026/04/14 16:45</td>
+                <td>佐藤 花子</td>
+                <td><span class="badge active">基本情報更新</span></td>
+                <td>姓カナ、名カナを更新</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="result-footer mt-12">
+          <span class="muted">1〜20件 / 47件</span>
+          <nav class="pager" aria-label="ページ操作">
+            <span class="itm">ITM-11</span>
+            <span class="page">‹</span>
+            <span class="page current">1</span>
+            <span class="page">2</span>
+            <span class="page">3</span>
+            <span class="page">›</span>
+          </nav>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

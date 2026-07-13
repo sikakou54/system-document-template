@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-008 組織マスター画面</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome" aria-hidden="true">
+      <div class="window-dots"><span></span><span></span><span></span></div>
+      <div class="browser-address">https://directory.example.com/admin/organizations</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">システム管理者</span>
+        <span class="user">管理者 一郎</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <input type="hidden" name="organizationVersion" value="4" data-itm-id="ITM-14">
+      <div hidden data-itm-id="ITM-13"></div>
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-008 / ORGANIZATION MASTER</div>
+          <h1>組織マスター</h1>
+          <p>組織の階層と有効期間を管理します。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-12</span>社員検索へ戻る</button>
+        </div>
+      </div>
+
+      <div class="alert" role="status">
+        <span class="alert-icon">i</span>
+        <span><strong>更新モード</strong>　一覧で選択した組織を更新できます。無効化すると直ちに手動選択できなくなります。</span>
+      </div>
+
+      <section class="card">
+        <div class="table-tools">
+          <h2 class="card-title"><span class="itm">ITM-01</span> 組織一覧</h2>
+          <span class="card-note">基準日: 2026/07/14　・　有効／無効を含む</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>組織コード</th>
+                <th>組織名</th>
+                <th>上位組織</th>
+                <th>有効開始日</th>
+                <th>有効終了日</th>
+                <th>手動利用可否</th>
+                <th>基準日時点</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="strong">ORG-001</td>
+                <td>コーポレート本部</td>
+                <td>—</td>
+                <td>2020/04/01</td>
+                <td>—</td>
+                <td><span class="badge active">利用可</span></td>
+                <td><span class="badge success">期間内</span></td>
+              </tr>
+              <tr class="selected">
+                <td class="strong">ORG-110</td>
+                <td>人事部 <span class="badge info">選択中</span></td>
+                <td>コーポレート本部</td>
+                <td>2024/04/01</td>
+                <td>—</td>
+                <td><span class="badge active">利用可</span></td>
+                <td><span class="badge success">期間内</span></td>
+              </tr>
+              <tr>
+                <td class="strong">ORG-120</td>
+                <td>経理部</td>
+                <td>コーポレート本部</td>
+                <td>2024/04/01</td>
+                <td>—</td>
+                <td><span class="badge active">利用可</span></td>
+                <td><span class="badge success">期間内</span></td>
+              </tr>
+              <tr>
+                <td class="strong">ORG-900</td>
+                <td>旧事業推進部</td>
+                <td>事業推進本部</td>
+                <td>2022/04/01</td>
+                <td>2025/03/31</td>
+                <td><span class="badge inactive">利用不可</span></td>
+                <td><span class="badge inactive">期間外</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card mb-0">
+        <div class="card-title-row">
+          <div>
+            <h2 class="card-title">組織情報の編集</h2>
+            <div class="card-note mt-12">選択行: ORG-110 人事部</div>
+          </div>
+          <div><span class="itm">ITM-02</span> <span class="badge info">更新モード</span></div>
+        </div>
+
+        <div class="grid cols-3">
+          <div class="field">
+            <label><span class="itm">ITM-03</span>組織コード <span class="req">必須</span></label>
+            <div class="control readonly">ORG-110 <span class="muted">変更不可</span></div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-04</span>組織名 <span class="req">必須</span></label>
+            <div class="control">人事部</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-05</span>上位組織 <span class="muted">任意</span></label>
+            <div class="control select">コーポレート本部</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-06</span>有効開始日 <span class="req">必須</span></label>
+            <div class="control"><span>2024/04/01</span><span class="muted">▣</span></div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-07</span>有効終了日 <span class="muted">任意</span></label>
+            <div class="control"><span class="placeholder">未設定</span><span class="muted">▣</span></div>
+          </div>
+          <div class="field">
+            <label>選択状態</label>
+            <div class="value-box"><span>手動利用可・期間内</span><span class="badge active">有効</span></div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="form-actions">
+          <button class="btn disabled" type="button" disabled aria-disabled="true"><span class="itm">ITM-08</span>登録</button>
+          <button class="btn ghost" type="button"><span class="itm">ITM-11</span>編集取消</button>
+          <button class="btn soft-danger" type="button"><span class="itm">ITM-10</span>無効化</button>
+          <button class="btn primary dark" type="button"><span class="itm">ITM-09</span>更新</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

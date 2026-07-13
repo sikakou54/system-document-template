@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-010 ログイン画面</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="browser-address">directory.example.invalid/login</div>
+    </div>
+
+    <main class="login-page">
+      <section class="login-card" aria-labelledby="login-title">
+        <div hidden data-itm-id="ITM-05"></div>
+        <div class="login-brand">
+          <div class="brand-mark">EM</div>
+          <div>
+            <h1 id="login-title">社員名簿管理システム</h1>
+            <p>社内アカウントでログインしてください</p>
+          </div>
+          <span class="badge info">SCR-010 / 架空環境</span>
+        </div>
+
+        <div class="alert">
+          <span class="alert-icon">i</span>
+          <span><strong>認証について</strong>　認証情報は社内認証基盤へ安全に送信されます。</span>
+        </div>
+
+        <div class="field">
+          <label for="login-id"><span class="itm">ITM-01</span>ログインID <span class="req">必須</span></label>
+          <div class="control" id="login-id">t.yamada</div>
+          <div class="help">前後の空白を除いて照合します</div>
+        </div>
+
+        <div class="field">
+          <label for="password"><span class="itm">ITM-02</span>パスワード <span class="req">必須</span></label>
+          <div class="control" id="password" aria-label="入力済みパスワード">••••••••••••</div>
+          <div class="help">入力内容は画面・ログへ表示しません</div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-04</span>入力クリア</button>
+          <button class="btn primary dark" type="button"><span class="itm">ITM-03</span>ログイン</button>
+        </div>
+
+        <div class="login-footer">
+          この画面のID・氏名・認証情報はモックアップ用の架空データです。<br>
+          Employee Directory Management / Internal Use
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-001 社員検索画面モックアップ</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="browser-address">https://employee-directory.example.com/employees</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">人事担当者・システム管理者</span>
+        <span class="user">佐々木 花子</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-001</div>
+          <h1>社員検索</h1>
+          <p>閲覧可能な社員を検索し、詳細情報の参照や検索結果の出力を行います。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-13</span>組織管理</button>
+          <button class="btn ghost" type="button"><span class="itm">ITM-13</span>役職管理</button>
+          <button class="btn ghost" type="button"><span class="itm">ITM-13</span>権限管理</button>
+          <button class="btn primary" type="button"><span class="itm">ITM-11</span>＋ 新規登録</button>
+        </div>
+      </div>
+
+      <div class="alert success">
+        <span class="alert-icon">✓</span>
+        <span class="itm">ITM-14</span>
+        <span><strong>MSG-16</strong>　検索結果を出力しました。</span>
+      </div>
+
+      <section class="card">
+        <div class="card-title-row">
+          <h2 class="card-title">検索条件</h2>
+          <span class="card-note">在籍状態の初期値は「在籍中」です</span>
+        </div>
+        <div class="grid cols-5">
+          <div class="field">
+            <label><span class="itm">ITM-01</span>社員番号</label>
+            <div class="control">E1024</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-02</span>氏名</label>
+            <div class="control"><span class="placeholder">姓・名を入力</span></div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-03</span>所属組織</label>
+            <div class="control select">開発本部</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-04</span>役職</label>
+            <div class="control select">すべて</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-05</span>在籍状態</label>
+            <div class="control select">在籍中</div>
+          </div>
+        </div>
+        <div class="form-actions mt-12">
+          <button class="btn ghost" type="button"><span class="itm">ITM-07</span>クリア</button>
+          <button class="btn primary dark" type="button"><span class="itm">ITM-06</span>検索</button>
+        </div>
+      </section>
+
+      <section class="card compact">
+        <div class="card-title-row">
+          <div>
+            <h2 class="card-title">検索結果出力</h2>
+            <div class="card-note mt-12">選択した順でCSV / XLSXの列を出力します。</div>
+          </div>
+          <span class="badge info">人事担当者：全13項目</span>
+        </div>
+        <div class="inline-bar">
+          <div class="field span-3">
+            <label><span class="itm">ITM-15</span>出力項目</label>
+            <div class="chip-row">
+              <span class="chip">社員番号 <span class="x">×</span></span>
+              <span class="chip">氏名 <span class="x">×</span></span>
+              <span class="chip">所属組織 <span class="x">×</span></span>
+              <span class="chip">役職 <span class="x">×</span></span>
+              <span class="chip">在籍状態 <span class="x">×</span></span>
+            </div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-16</span>出力形式</label>
+            <div class="control select">CSV</div>
+          </div>
+          <button class="btn secondary" type="button"><span class="itm">ITM-12</span>出力</button>
+        </div>
+      </section>
+
+      <section class="card mb-0">
+        <div class="table-tools">
+          <div>
+            <h2 class="card-title"><span class="itm">ITM-08</span> 検索結果</h2>
+          </div>
+          <div class="result-count"><span class="itm">ITM-09</span> 該当件数：128件</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>社員番号</th>
+                <th>氏名</th>
+                <th>所属組織</th>
+                <th>役職</th>
+                <th>在籍状態</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selected">
+                <td><span class="link">E1024</span></td>
+                <td>山田 太郎</td>
+                <td>開発本部 プラットフォーム部</td>
+                <td>シニアエンジニア</td>
+                <td><span class="badge active">在籍中</span></td>
+              </tr>
+              <tr>
+                <td><span class="link">E1058</span></td>
+                <td>鈴木 美咲</td>
+                <td>開発本部 プロダクト開発部</td>
+                <td>マネージャー</td>
+                <td><span class="badge active">在籍中</span></td>
+              </tr>
+              <tr>
+                <td><span class="link">E1103</span></td>
+                <td>高橋 健</td>
+                <td>開発本部 品質保証部</td>
+                <td>エンジニア</td>
+                <td><span class="badge active">在籍中</span></td>
+              </tr>
+              <tr>
+                <td><span class="link">E1172</span></td>
+                <td>田中 彩</td>
+                <td>開発本部 プラットフォーム部</td>
+                <td>エンジニア</td>
+                <td><span class="badge active">在籍中</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="result-footer mt-12">
+          <span class="card-note">1〜20件を表示</span>
+          <div class="pager" aria-label="ページ操作">
+            <span class="itm">ITM-10</span>
+            <span class="page">‹</span>
+            <span class="page current">1</span>
+            <span class="page">2</span>
+            <span class="page">3</span>
+            <span class="page">…</span>
+            <span class="page">7</span>
+            <span class="page">›</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

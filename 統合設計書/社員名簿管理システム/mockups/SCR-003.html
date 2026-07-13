@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-003 社員登録画面モックアップ</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="browser-address">https://employee-directory.example.com/employees/new</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">人事担当者</span>
+        <span class="user">佐々木 花子</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <input type="hidden" name="masterEffectiveOn" value="2026-10-01" data-itm-id="ITM-14">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-003</div>
+          <h1>社員登録</h1>
+          <p>社員の基本情報と初期所属を登録します。<span class="req">＊</span>は必須項目です。</p>
+        </div>
+      </div>
+
+      <div class="alert warning">
+        <span class="alert-icon">!</span>
+        <span class="itm">ITM-13</span>
+        <span><strong>状態例 MSG-01</strong>　入力内容に誤りがあります。対象の項目をご確認ください。</span>
+      </div>
+
+      <div class="split">
+        <section class="card">
+          <div class="card-title-row">
+            <h2 class="card-title">基本情報</h2>
+            <span class="card-note">文字列は前後空白除去・NFC正規化後に登録</span>
+          </div>
+          <div class="grid cols-2">
+            <div class="field">
+              <label><span class="itm">ITM-01</span>社員番号 <span class="req">＊</span></label>
+              <div class="control">E1250</div>
+              <div class="help">半角英数字 1〜20文字</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-06</span>メールアドレス <span class="req">＊</span></label>
+              <div class="control invalid" aria-invalid="true">aoi.sato@</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-02</span>姓 <span class="req">＊</span></label>
+              <div class="control">佐藤</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-03</span>名 <span class="req">＊</span></label>
+              <div class="control">葵</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-04</span>姓カナ</label>
+              <div class="control">サトウ</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-05</span>名カナ</label>
+              <div class="control">アオイ</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="stack">
+          <section class="card compact">
+            <div class="card-title-row">
+              <h2 class="card-title">雇用情報</h2>
+              <span class="badge info">入社日時点</span>
+            </div>
+            <div class="grid cols-2">
+              <div class="field">
+                <label><span class="itm">ITM-07</span>入社日 <span class="req">＊</span></label>
+                <div class="control">2026-10-01</div>
+                <div class="help">変更すると組織・役職候補を再取得します</div>
+              </div>
+              <div class="field">
+                <label><span class="itm">ITM-10</span>雇用区分 <span class="req">＊</span></label>
+                <div class="control select">正社員</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card compact mb-0">
+            <div class="card-title-row">
+              <h2 class="card-title">初期所属</h2>
+              <span class="card-note">適用開始日は入社日から自動設定</span>
+            </div>
+            <div class="grid cols-2">
+              <div class="field">
+                <label><span class="itm">ITM-08</span>所属組織 <span class="req">＊</span></label>
+                <div class="control select">開発本部 プロダクト開発部</div>
+              </div>
+              <div class="field">
+                <label><span class="itm">ITM-09</span>役職 <span class="req">＊</span></label>
+                <div class="control select">エンジニア</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <section class="card compact mb-0">
+        <div class="inline-bar">
+          <div>
+          <span class="badge warning">入力エラー</span>
+          <span class="card-note">形式不正の項目を修正すると登録できます。</span>
+          </div>
+          <div class="form-actions">
+            <button class="btn ghost" type="button"><span class="itm">ITM-12</span>キャンセル</button>
+            <button class="btn disabled" type="button" disabled><span class="itm">ITM-11</span>登録</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-009 役職マスター画面（更新モード）</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="browser-address">directory.example.invalid/admin/positions</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory Management</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">システム管理者</span>
+        <span class="user">佐藤 管理（架空）</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <div hidden data-itm-id="ITM-13"></div>
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-009 / POSITION MASTER</div>
+          <h1>役職マスター</h1>
+          <p>役職の有効期間と手動利用可否を管理します。表示データはすべて架空です。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-12</span>社員検索へ戻る</button>
+        </div>
+      </div>
+
+      <div class="alert">
+        <span class="alert-icon">i</span>
+        <span><strong>更新モード</strong>　「P-MGR-02 シニアマネージャー」を選択しています。更新後は一覧を再取得します。</span>
+      </div>
+
+      <div class="split">
+        <section class="card">
+          <div class="card-title-row">
+            <div>
+              <h2 class="card-title"><span class="itm">ITM-01</span> 役職一覧</h2>
+              <div class="card-note mt-12">業務日 2026-07-14 時点／有効・無効を含む</div>
+            </div>
+            <span class="badge info">4件</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>役職コード</th>
+                  <th>役職名</th>
+                  <th>ランク</th>
+                  <th>有効期間</th>
+                  <th>手動利用</th>
+                  <th>期間状態</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="strong">P-DIR-01</td>
+                  <td>本部長</td>
+                  <td>10</td>
+                  <td>2020-01-01 〜</td>
+                  <td><span class="badge active">利用可</span></td>
+                  <td><span class="badge success">期間内</span></td>
+                </tr>
+                <tr class="selected">
+                  <td class="strong link">P-MGR-02</td>
+                  <td class="strong">シニアマネージャー</td>
+                  <td>20</td>
+                  <td>2023-04-01 〜</td>
+                  <td><span class="badge active">利用可</span></td>
+                  <td><span class="badge success">期間内</span></td>
+                </tr>
+                <tr>
+                  <td class="strong">P-LEAD-03</td>
+                  <td>チームリーダー</td>
+                  <td>30</td>
+                  <td>2024-04-01 〜 2027-03-31</td>
+                  <td><span class="badge active">利用可</span></td>
+                  <td><span class="badge success">期間内</span></td>
+                </tr>
+                <tr>
+                  <td class="strong">P-OLD-99</td>
+                  <td>旧統括職</td>
+                  <td>90</td>
+                  <td>2018-01-01 〜 2025-03-31</td>
+                  <td><span class="badge inactive">利用不可</span></td>
+                  <td><span class="badge inactive">期間外</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="help mb-0">青色の行が選択中です。役職コードは更新モードでは変更できません。</p>
+        </section>
+
+        <section class="card">
+          <div class="card-title-row">
+            <div>
+              <h2 class="card-title">役職情報を編集</h2>
+              <div class="card-note mt-12"><span class="itm">ITM-02</span> 操作モード</div>
+            </div>
+            <span class="badge warning">更新モード</span>
+          </div>
+
+          <div class="grid cols-2">
+            <div class="field span-2">
+              <label><span class="itm">ITM-03</span>役職コード <span class="req">必須・変更不可</span></label>
+              <div class="control readonly"><span>P-MGR-02</span><span class="badge inactive">読取専用</span></div>
+            </div>
+            <div class="field span-2">
+              <label><span class="itm">ITM-04</span>役職名 <span class="req">必須</span></label>
+              <div class="control">シニアマネージャー</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-05</span>役職ランク</label>
+              <div class="control">20</div>
+              <div class="help">0以上の整数</div>
+            </div>
+            <input type="hidden" name="positionVersion" value="7" data-itm-id="ITM-14">
+            <div class="field">
+              <label><span class="itm">ITM-06</span>有効開始日 <span class="req">必須</span></label>
+              <div class="control">2023-04-01</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-07</span>有効終了日</label>
+              <div class="control">2027-03-31</div>
+              <div class="help">将来の期間終了を予約</div>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+          <div class="form-actions">
+            <button class="btn disabled" type="button"><span class="itm">ITM-08</span>登録</button>
+            <button class="btn ghost" type="button"><span class="itm">ITM-11</span>編集取消</button>
+            <button class="btn soft-danger" type="button"><span class="itm">ITM-10</span>無効化</button>
+            <button class="btn primary" type="button"><span class="itm">ITM-09</span>更新</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-011 権限管理画面（利用者選択済み）</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="browser-address">directory.example.invalid/admin/permissions</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory Management</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">システム管理者</span>
+        <span class="user">佐藤 管理（架空）</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <div hidden data-itm-id="ITM-13"></div>
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-011 / PERMISSION MANAGEMENT</div>
+          <h1>権限管理</h1>
+          <p>利用者を検索し、指定日以降の現在・将来ロールを一式で更新します。表示データはすべて架空です。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-12</span>社員検索へ戻る</button>
+        </div>
+      </div>
+
+      <div class="summary-strip">
+        <div class="summary-item">
+          <div class="label">1. 検索条件</div>
+          <div class="value">入力済み</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">2. 利用者候補</div>
+          <div class="value">3件</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">3. 対象利用者</div>
+          <div class="value">山田 太郎</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">4. 更新入力</div>
+          <div class="value">編集可能</div>
+        </div>
+      </div>
+
+      <section class="card compact">
+        <div class="card-title-row">
+          <h2 class="card-title">1. 利用者を検索</h2>
+          <span class="badge success">検索済み</span>
+        </div>
+        <div class="grid cols-4">
+          <div class="field">
+            <label><span class="itm">ITM-01</span>社員番号</label>
+            <div class="control">1042</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-02</span>氏名</label>
+            <div class="control">山田</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-03</span>所属組織</label>
+            <div class="control select">営業本部</div>
+          </div>
+          <div class="field">
+            <label>検索操作</label>
+            <button class="btn primary" type="button"><span class="itm">ITM-04</span>利用者検索</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="split">
+        <section class="card compact">
+          <div class="card-title-row">
+            <h2 class="card-title"><span class="itm">ITM-05</span> 2. 利用者候補</h2>
+            <span class="result-count">3件（1〜3件）</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>社員番号</th>
+                  <th>氏名</th>
+                  <th>所属</th>
+                  <th>在籍状態</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="selected">
+                  <td class="strong link">E-1042</td>
+                  <td class="strong">山田 太郎</td>
+                  <td>営業本部／法人営業部</td>
+                  <td><span class="badge active">在籍</span></td>
+                </tr>
+                <tr>
+                  <td class="strong">E-1187</td>
+                  <td>山田 花子</td>
+                  <td>営業本部／営業企画部</td>
+                  <td><span class="badge active">在籍</span></td>
+                </tr>
+                <tr>
+                  <td class="strong">E-0911</td>
+                  <td>山田 一郎</td>
+                  <td>営業本部／西日本営業部</td>
+                  <td><span class="badge inactive">退職予定</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="result-footer mt-12">
+            <span class="muted"><span class="itm">ITM-15</span> 利用者候補ページ操作</span>
+            <div class="pager" aria-label="ページャー">
+              <span class="page">‹</span><span class="page current">1</span><span class="page">›</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card compact">
+          <div class="card-title-row">
+            <h2 class="card-title"><span class="itm">ITM-06</span> 3. 選択ユーザー</h2>
+            <span class="badge success">アカウント有効</span>
+          </div>
+          <div class="mini-panel">
+            <div class="kv">
+              <div class="k">氏名</div><div class="v">山田 太郎（架空）</div>
+              <div class="k">社員番号</div><div class="v">E-1042</div>
+              <div class="k">所属</div><div class="v">営業本部／法人営業部</div>
+            </div>
+            <input type="hidden" name="userVersion" value="12" data-itm-id="ITM-14">
+          </div>
+
+          <div class="card-title-row mt-12">
+            <h3 class="card-title"><span class="itm">ITM-16</span> 現在・将来ロール割当</h3>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>区分</th><th>ロール</th><th>利用状態</th><th>開始日</th><th>終了日</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge active">現行</span></td>
+                  <td>一般社員</td>
+                  <td><span class="badge active">有効</span></td>
+                  <td>2022-04-01</td>
+                  <td>―</td>
+                </tr>
+                <tr>
+                  <td><span class="badge active">現行</span></td>
+                  <td>部門管理者</td>
+                  <td><span class="badge active">有効</span></td>
+                  <td>2024-04-01</td>
+                  <td>―</td>
+                </tr>
+                <tr>
+                  <td><span class="badge future">将来</span></td>
+                  <td>人事担当者</td>
+                  <td><span class="badge active">有効</span></td>
+                  <td>2026-10-01</td>
+                  <td>―</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section class="card compact mb-0">
+        <div class="card-title-row">
+          <div>
+            <h2 class="card-title">4. 更新内容</h2>
+            <div class="card-note mt-12">2026-08-01以降の割当を、次のロール一式と共通期間で置き換えます。</div>
+          </div>
+          <span class="badge warning">未保存の変更あり</span>
+        </div>
+
+        <div class="grid cols-4">
+          <div class="field span-2">
+            <label><span class="itm">ITM-07</span>更新後ロール一式 <span class="req">1件以上</span></label>
+            <div class="checks">
+              <span class="check"><span class="box checked">✓</span>一般社員</span>
+              <span class="check"><span class="box checked">✓</span>人事担当者</span>
+              <span class="check"><span class="box"></span>部門管理者</span>
+            </div>
+            <div class="help">「部門管理者」と将来予約済みの「人事担当者」は、適用日以降に新しい一式へ置換されます。</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-08</span>更新適用日</label>
+            <div class="control">2026-08-01</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-09</span>更新後共通終了日</label>
+            <div class="control"><span class="placeholder">未指定（期限なし）</span></div>
+          </div>
+        </div>
+
+        <div class="inline-bar mt-12">
+          <div class="muted"><strong>更新確認:</strong> 終了・取消となる現在／将来ロールを確認してから更新します。</div>
+          <div class="form-actions">
+            <button class="btn ghost" type="button"><span class="itm">ITM-11</span>編集取消</button>
+            <button class="btn primary" type="button"><span class="itm">ITM-10</span>ロール更新</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

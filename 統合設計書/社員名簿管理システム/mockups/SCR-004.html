@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-004 社員編集画面モックアップ</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="browser-address">https://employee-directory.example.com/employees/8f36a17d/edit</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">人事担当者</span>
+        <span class="user">佐々木 花子</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <input type="hidden" name="version" value="12" data-itm-id="ITM-09">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-004</div>
+          <h1>社員編集</h1>
+          <p>社員基本情報を編集します。所属・在籍状態はこの画面では変更できません。</p>
+        </div>
+      </div>
+
+      <div class="alert danger">
+        <span class="alert-icon">!</span>
+        <span class="itm">ITM-13</span>
+        <span><strong>MSG-23</strong>　他の利用者による更新がありました。最新の内容を再取得してください。</span>
+      </div>
+
+      <div class="summary-strip">
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-01</span> 社員番号</div>
+          <div class="value">E1024</div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-08</span> 在籍状態</div>
+          <div class="value"><span class="badge active">在籍中</span></div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-08</span> 現所属</div>
+          <div class="value">プラットフォーム部</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">現在の状態</div>
+          <div class="value"><span class="badge warning">更新競合</span></div>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-title-row">
+          <h2 class="card-title">基本情報</h2>
+          <span class="card-note">競合解消まで編集項目を無効化しています</span>
+        </div>
+        <div class="grid cols-3">
+          <div class="field">
+            <label><span class="itm">ITM-02</span>姓 <span class="req">＊</span></label>
+            <div class="control readonly">山田</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-03</span>名 <span class="req">＊</span></label>
+            <div class="control readonly">太郎</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-14</span>雇用区分 <span class="req">＊</span></label>
+            <div class="control readonly">正社員</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-04</span>姓カナ</label>
+            <div class="control readonly">ヤマダ</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-05</span>名カナ</label>
+            <div class="control readonly">タロウ</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-06</span>メールアドレス <span class="req">＊</span></label>
+            <div class="control readonly">taro.yamada@example.com</div>
+          </div>
+          <div class="field span-2">
+            <label><span class="itm">ITM-07</span>連絡先</label>
+            <div class="control readonly">090-1234-5678</div>
+            <div class="help">半角数字・+・-・半角空白・丸括弧、30文字以内</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card compact mb-0">
+        <div class="inline-bar">
+          <span class="card-note">最新情報の再取得後、版数と入力内容を更新します。</span>
+          <div class="form-actions">
+            <button class="btn disabled" type="button" disabled><span class="itm">ITM-12</span>キャンセル</button>
+            <button class="btn secondary" type="button"><span class="itm">ITM-11</span>最新情報再取得</button>
+            <button class="btn disabled" type="button" disabled><span class="itm">ITM-10</span>更新</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-005 社員異動画面</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome" aria-hidden="true">
+      <div class="window-dots"><span></span><span></span><span></span></div>
+      <div class="browser-address">https://directory.example.com/employees/emp-000128/assignments/new</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">人事担当者</span>
+        <span class="user">佐藤 花子</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <input type="hidden" name="employeeVersion" value="5" data-itm-id="ITM-09">
+      <input type="hidden" name="masterEffectiveOn" value="2026-08-01" data-itm-id="ITM-14">
+      <button class="btn secondary" type="button" hidden aria-hidden="true"><span class="itm">ITM-12</span>マスター再取得</button>
+      <div hidden data-itm-id="ITM-13"></div>
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-005 / ASSIGNMENT</div>
+          <h1>社員異動</h1>
+          <p>異動日を基準に、所属組織・役職・上長を変更します。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-11</span>キャンセル</button>
+        </div>
+      </div>
+
+      <section class="summary-strip" aria-label="対象社員の現在情報">
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-01</span> 対象社員</div>
+          <div class="value">E00128　高橋 健太</div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-02</span> 在籍状態</div>
+          <div class="value"><span class="badge active">在籍中</span></div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-03</span> 現所属組織</div>
+          <div class="value">営業本部 第一営業部</div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-04</span> 現役職</div>
+          <div class="value">主任</div>
+        </div>
+      </section>
+
+      <div class="alert warning" role="status">
+        <span class="alert-icon">i</span>
+        <span><strong>将来異動</strong>　異動日は未来日です。入力した内容は将来の異動として登録されます。</span>
+      </div>
+
+      <section class="card">
+        <div class="card-title-row">
+          <div>
+            <h2 class="card-title">異動内容</h2>
+            <div class="card-note mt-12">候補は異動日（2026年8月1日）時点で有効なマスターです。</div>
+          </div>
+          <span class="badge future">将来異動</span>
+        </div>
+
+        <div class="grid cols-2">
+          <div class="field">
+            <label><span class="itm">ITM-07</span>異動日 <span class="req">必須</span></label>
+            <div class="control"><span>2026/08/01</span><span class="muted">▣</span></div>
+            <div class="help">本日以降の日付を指定してください。</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-08</span>上長社員 <span class="muted">任意</span></label>
+            <div class="control"><span>E00042　鈴木 美咲</span><span class="muted">⌕</span></div>
+            <div class="help">社員番号または氏名を2文字以上入力し、候補から選択します。</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-05</span>異動先組織 <span class="req">必須</span></label>
+            <div class="control select">事業推進本部 プロダクト企画部</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-06</span>異動先役職 <span class="req">必須</span></label>
+            <div class="control select">課長代理</div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="inline-bar">
+          <div class="card-note">異動日時点の所属履歴と重複しないか、実行時に確認します。</div>
+          <div class="form-actions">
+            <!-- ITM-12はマスター無効エラー時だけ表示するため、この代表状態では非表示。 -->
+            <button class="btn primary dark" type="button"><span class="itm">ITM-10</span>異動実行</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

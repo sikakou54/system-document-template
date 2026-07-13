@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-002 社員詳細画面モックアップ</title>
+  <link rel="stylesheet" href="_mockup.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="browser-address">https://employee-directory.example.com/employees/8f36a17d</div>
+    </div>
+
+    <header class="appbar">
+      <div class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div class="brand-name">社員名簿管理システム</div>
+          <div class="brand-sub">Employee Directory</div>
+        </div>
+      </div>
+      <div class="app-actions">
+        <span class="role-label">人事担当者</span>
+        <span class="user">佐々木 花子</span>
+        <button class="logout" type="button">ログアウト</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">SCR-002</div>
+          <h1>社員詳細</h1>
+          <p>対象社員の基本情報と、現在有効な所属情報を表示します。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" type="button"><span class="itm">ITM-11</span>一覧へ戻る</button>
+          <button class="btn disabled" type="button" disabled><span class="itm">ITM-10</span>変更履歴</button>
+          <button class="btn disabled" type="button" disabled><span class="itm">ITM-07</span>基本情報編集</button>
+          <button class="btn disabled" type="button" disabled><span class="itm">ITM-08</span>異動</button>
+          <button class="btn disabled" type="button" disabled><span class="itm">ITM-09</span>退職処理</button>
+        </div>
+      </div>
+
+      <div class="alert danger">
+        <span class="alert-icon">!</span>
+        <span class="itm">ITM-13</span>
+        <span><strong>状態例 MSG-20</strong>　社員情報を取得できませんでした。時間をおいて再度お試しください。</span>
+        <button class="btn secondary" type="button"><span class="itm">ITM-12</span>再読込</button>
+      </div>
+
+      <div class="summary-strip">
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-01</span> 社員番号</div>
+          <div class="value">E1024</div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-02</span> 氏名</div>
+          <div class="value">山田 太郎</div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-05</span> 在籍状態</div>
+          <div class="value"><span class="badge active">在籍中</span></div>
+        </div>
+        <div class="summary-item">
+          <div class="label"><span class="itm">ITM-06</span> 現所属</div>
+          <div class="value">プラットフォーム部</div>
+        </div>
+      </div>
+
+      <div class="split">
+        <section class="card mb-0">
+          <div class="card-title-row">
+            <h2 class="card-title">基本情報</h2>
+            <span class="badge info">人事担当者表示</span>
+          </div>
+          <div class="grid cols-2">
+            <div class="field">
+              <label><span class="itm">ITM-01</span>社員番号</label>
+              <div class="value-box">E1024</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-05</span>雇用区分・在籍状態</label>
+              <div class="value-box"><span>正社員</span><span class="badge active">在籍中</span></div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-02</span>氏名・氏名カナ</label>
+              <div class="value-box">山田 太郎 ／ ヤマダ タロウ</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-03</span>メールアドレス</label>
+              <div class="value-box">taro.yamada@example.com</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-03</span>連絡先</label>
+              <div class="value-box">090-1234-5678</div>
+            </div>
+            <div class="field">
+              <label><span class="itm">ITM-04</span>入社日</label>
+              <div class="value-box">2021-04-01</div>
+            </div>
+            <div class="field span-2">
+              <label><span class="itm">ITM-04</span>退職日・退職区分</label>
+              <div class="value-box"><span class="muted">未設定</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card mb-0">
+          <div class="card-title-row">
+            <h2 class="card-title"><span class="itm">ITM-06</span> 現所属情報</h2>
+            <span class="badge active">現在有効</span>
+          </div>
+          <div class="stack">
+            <div class="mini-panel">
+              <h3>所属組織</h3>
+              <div class="kv">
+                <span class="k">組織</span><span class="v">開発本部 プラットフォーム部</span>
+                <span class="k">役職</span><span class="v">シニアエンジニア</span>
+                <span class="k">上長</span><span class="v">鈴木 美咲（E1058）</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
