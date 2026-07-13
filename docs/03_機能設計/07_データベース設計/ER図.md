@@ -18,6 +18,7 @@ erDiagram
     M_ROOMS ||--o{ T_USAGE_RECORDS : "利用対象"
     T_RESERVATIONS ||--o| T_USAGE_RECORDS : "利用量記録"
     M_USERS ||--o{ T_INVOICES : "請求先"
+    M_USERS ||--o{ T_INBOUND_EVENTS : "受信イベント"
 
     M_USERS {
         integer ID PK
@@ -82,6 +83,15 @@ erDiagram
         integer AMOUNT
         integer STATUS
     }
+    T_INBOUND_EVENTS {
+        integer ID PK
+        text EXTERNAL_SERVICE UK
+        text EXTERNAL_EVENT_ID UK
+        text EVENT_TYPE
+        integer STATUS
+        integer USER_ID FK
+        text CORRELATION_ID
+    }
 ```
 
 # 3. リレーション一覧
@@ -97,3 +107,4 @@ erDiagram
 | M_ROOMS(TBL-002) | T_USAGE_RECORDS(TBL-007) | 1 : N | 会議室は複数の利用量記録を持つ(T_USAGE_RECORDS.ROOM_ID) |
 | T_RESERVATIONS(TBL-003) | T_USAGE_RECORDS(TBL-007) | 1 : 0..1 | 完了予約ごとに利用量記録を1件計上(T_USAGE_RECORDS.RESERVATION_ID、UNIQUE) |
 | M_USERS(TBL-001) | T_INVOICES(TBL-008) | 1 : N | ユーザーは複数の請求を持つ(T_INVOICES.USER_ID) |
+| M_USERS(TBL-001) | T_INBOUND_EVENTS(TBL-010) | 1 : N | ユーザーは複数の外部受信イベントに関連しうる(T_INBOUND_EVENTS.USER_ID、NULL許容) |

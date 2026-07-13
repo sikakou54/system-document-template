@@ -7,8 +7,8 @@ MeetRoomの機能設計に関わる対応関係を一元管理する。
 
 | ファイル | 対象経路 | 目的 |
 |---|---|---|
-| [traceability_uc_sequence.md](traceability_uc_sequence.md) | RQ→FR/CFR→UC→SEQ | 機能要件・ユースケースを具体化するシーケンスと、SEQ省略理由を追跡する |
-| [traceability_sequence_design.md](traceability_sequence_design.md) | SEQ→SCR/JOB/API/MOD/SQL/MDL/TBL/ERR/MSG | シーケンスから各個別設計への落とし込みを追跡する |
+| [UCシーケンストレーサビリティ.md](UCシーケンストレーサビリティ.md) | RQ→FR/CFR→UC→SEQ | 機能要件・ユースケースを具体化するシーケンスと、SEQ省略理由を追跡する |
+| [シーケンス設計トレーサビリティ.md](シーケンス設計トレーサビリティ.md) | SEQ→SCR/JOB/API/MOD/SQL/MDL/TBL/ERR/MSG | シーケンスから各個別設計への落とし込みを追跡する |
 
 # 3. 更新ルール
 
