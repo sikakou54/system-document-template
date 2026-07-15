@@ -17,8 +17,8 @@ jobs:
           use-quiet-mode: 'yes'
           use-verbose-mode: 'yes'
           config-file: '.github/workflows/mlc_config.json'
-          folder-path: 'docs'
-          file-path: './README.md'
+          folder-path: '社員名簿管理システム'
+          file-path: './社員名簿管理システム_統合設計書.md'
           file-extension: '.md'
       - name: Check template Markdown links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
@@ -26,5 +26,14 @@ jobs:
           use-quiet-mode: 'yes'
           use-verbose-mode: 'yes'
           config-file: '.github/workflows/mlc_config.json'
-          folder-path: 'template'
+          folder-path: 'テンプレート'
+          file-path: './テンプレート_統合設計書.md'
+          file-extension: '.md'
+      - name: Check root README links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'yes'
+          config-file: '.github/workflows/mlc_config.json'
+          file-path: './README.md'
           file-extension: '.md'

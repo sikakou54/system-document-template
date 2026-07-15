@@ -1,46 +1,59 @@
-# system-document-template
+# 統合設計書テンプレート
 
 [![Markdown Link Check](https://github.com/sikakou54/system-document-template/actions/workflows/markdown-link-check.yml/badge.svg)](https://github.com/sikakou54/system-document-template/actions/workflows/markdown-link-check.yml)
 ![Format](https://img.shields.io/badge/format-Markdown-lightgrey?logo=markdown)
 
-企画・要求定義・要件定義・機能設計ドキュメントを、ID採番・トレーサビリティ・レビュー観点まで含めて標準化するための**ドキュメントテンプレート・リポジトリ**。
-再利用できる**テンプレート一式**(template/)と、それに従って書かれた**完成サンプル**(docs/ = 会議室予約プロダクト MeetRoom)を収録する。
+要求定義から詳細設計（シーケンス・画面・データベース・API・JOB・モジュール・クエリ）までを、0〜13章の一貫した構成で作成するためのテンプレートと記入例を収録する。
 
-設計は、1.目的・スコープ → 2.ユースケース・業務ルール → 3.非機能要件 → 4.データ・状態 → 5.責務・境界 → 6.論理契約 → 7.シーケンス検証 → 8.個別・運用設計の順で進める。各工程は前工程のゲート承認後に確定する。
+本リポジトリのメイン文書は、ルート直下の統合版と、その章を設計種別ごとに分けた分割版である。
 
-## 構成
+## メイン文書
+
+| 文書 | 役割 |
+|---|---|
+| [テンプレート_統合設計書.md](テンプレート_統合設計書.md) | **テンプレートの正本**。新規システムの設計書はこのファイルをコピーして作成する |
+| [社員名簿管理システム_統合設計書.md](社員名簿管理システム_統合設計書.md) | テンプレートに従って詳細化した記入例。Cloudflare Workers＋D1（SQLite互換）を採用する |
+
+## 設計種別別の分割版
 
 | ディレクトリ | 役割 | 入口 |
 |---|---|---|
-| [template/](template/) | 新規プロジェクトへコピーして使う**テンプレート集**(文書種別ごとの雛形・運用ルール・採番ルール・プロンプト)。テンプレートの正本 | [template/README.md](template/README.md) |
-| [docs/](docs/) | テンプレートに従って書いた**サンプル**(MeetRoom の企画・要求定義・要件定義・機能設計一式)。記入例 | [docs/README.md](docs/README.md) |
+| [テンプレート/](テンプレート/) | 0〜13章を設計種別ごとに分割したテンプレート | [テンプレート/README.md](テンプレート/README.md) |
+| [社員名簿管理システム/](社員名簿管理システム/) | 同じ章構成で作成した社員名簿管理システムの記入例。11画面のHTML/PNGモックアップを含む | [社員名簿管理システム/README.md](社員名簿管理システム/README.md) |
+
+## 設計範囲
+
+| No | セクション | 主な内容 |
+|---:|---|---|
+| 0 | はじめに | 目的、前提、設計確定範囲 |
+| 1 | 要求定義 | 背景、目的、業務要求、非機能要求、制約、対象範囲 |
+| 2 | 機能要件 | 機能一覧、想定される全ユースケースと網羅表、データモデル、認可、共通コード |
+| 3 | シーケンス設計 | 全対象UCの構成要素、SCR/API/M/JOB/DB対応、連携、分岐、原子実行境界 |
+| 4 | 画面設計 | HTML/PNGモックアップ、項目、イベント、状態、遷移、メッセージ |
+| 5 | データベース設計 | SQLite/D1のテーブル、制約、索引、トリガー、原子実行 |
+| 6 | API設計 | 入出力、バリデーション、処理フロー、処理詳細、エラー |
+| 7 | JOB設計 | Cron、Queues、処理フロー、処理詳細、再配信、監視 |
+| 8 | モジュール設計 | 責務、公開IF、処理フロー、処理詳細、データアクセス境界 |
+| 9 | クエリ設計 | データアクセスモジュールが実行するSQL、bind、結果、性能、排他 |
+| 10 | トレーサビリティ | 要求から画面、API、モジュール、JOB、SQL、DBへの対応 |
+| 11 | レビューチェックリスト | 詳細設計とアーキテクチャ境界の確認観点 |
+| 12 | 詳細設計への引継ぎ | 実装・環境・性能・試験で確定する事項 |
+| 13 | 設計の落とし込み関係 | オンライン／バッチからモジュール、SQL、DBへの経路 |
 
 ## 使い方
 
-| 目的 | 手順 |
-|---|---|
-| テンプレートで新規プロジェクトを始める | [template/](template/) 一式を新規プロジェクトの docs/ としてコピーし、各テンプレートを埋める(詳細は [template/README.md](template/README.md)) |
-| 記入例(完成形)を確認する | [docs/](docs/) の MeetRoom サンプルを読む([docs/README.md](docs/README.md)) |
-| リポジトリの運用ルールを知る | [CLAUDE.md](CLAUDE.md) |
+1. [テンプレート_統合設計書.md](テンプレート_統合設計書.md) を新しいシステム名でコピーする。
+2. 各章直前の定義ルールコメントを確認し、0章から順に記入する。
+3. 具体的な記載粒度は [社員名簿管理システム_統合設計書.md](社員名簿管理システム_統合設計書.md) を参照する。
+4. 複数人で章別に管理する場合は [テンプレート/](テンプレート/) を使用する。
 
-## 必須の設計順序
+## アーキテクチャ前提
 
-上記の8工程とゲートは [template/99_その他/工程ゲート.md](template/99_その他/工程ゲート.md) を正本とする。前ゲートが「承認済」でない限り次工程を確定せず、上流変更時は影響を受ける下流ゲートを「失効」に戻す。
-
-## README / CLAUDE の階層
-
-| 階層 | README.md | CLAUDE.md |
-|---|---|---|
-| ルート(本リポジトリ) | リポジトリの概要(本ファイル) | リポジトリの運用ルール([CLAUDE.md](CLAUDE.md)) |
-| [docs/](docs/) | サンプルプロジェクト(MeetRoom)の概要 | プロジェクトの運用ルール ※ |
-| [template/](template/) | プロジェクト概要の雛形(docs/README.md のテンプレート) | プロジェクトの運用ルール ※ |
-
-※ docs/ と template/ の CLAUDE.md は同一内容(プロジェクト運用ルールの正本)。
-
-## サンプル(MeetRoom)の技術前提
-
-Cloudflare (Pages / Workers / D1 / KV / Queues / Cron Triggers) ＋ Stripe(有料会議室の従量課金) ＋ Resend(メール送信)。DB は Cloudflare D1(SQLite)。詳細は [docs/README.md](docs/README.md)。
+- バックエンドはCloudflare Workers Paid、データベースはCloudflare D1（SQLite互換）、非同期処理はCloudflare Queuesを前提とする。
+- D1 Binding、Prepared Statement、SQLを扱うのはデータアクセスモジュールだけとする。
+- APIやJOBからデータベースへ直接アクセスしない。
+- API、JOB、モジュールは番号付きの「処理フロー」と、それに対応する「処理詳細」で定義する。
 
 ## CI
 
-[.github/workflows/markdown-link-check.yml](.github/workflows/markdown-link-check.yml) が push / Pull Request 時にマークダウンのリンク切れを検査する。
+[.github/workflows/markdown-link-check.yml](.github/workflows/markdown-link-check.yml) が、ルートREADME、テンプレート、社員名簿管理システム、両統合版のMarkdownリンク切れを検査する。
