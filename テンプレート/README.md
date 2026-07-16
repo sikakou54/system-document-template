@@ -5,13 +5,8 @@
 ## 技術基盤・アーキテクチャ前提
 
 - 本番バックエンドはCloudflare Workers Paid、永続化DBはCloudflare D1、非同期基盤はCloudflare Queuesとする。
-- D1 binding名は`DB`を標準とし、Worker実行コンテキストの`env.DB`を受け取れるのはM-006 D1データアクセスだけとする。
-- `env.DB`、D1 Workers Binding API、SQL-ID、物理テーブルをAPI・JOB・M-001〜M-005・M-007・M-008へ公開しない。APIはログイン以外をM-002、ログインをM-003へ、JOBはM-002へ委譲する。
-- M-006は定義済みSQLを`prepare()`し、論理入力と順序付き`?1`,`?2`,...の固定対応どおりに`bind()`して実行する。名前付きplaceholderを実SQLに使用しない。複数文を不可分に更新する場合は、事前に生成・バインドしたPrepared Statementだけを1回の`batch()`へ渡し、D1 batchの全成功または全ロールバックを原子実行境界とする。
-- DB設計・SQLはSQLite/D1構文と型で定義し、PostgreSQLの型、演算子、配列、拡張、ロック構文を使用しない。
-- 定期JOBの `scheduled()` はUTC Cronから初回Queueメッセージを投入するだけとし、業務チャンクはQueuesの `queue()` consumerがM-002公開IFを1メッセージにつき1回呼ぶ。`max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、DLQを固定し、1チャンク最大40件、D1 Statement内部予算900・Paid上限1000とする。
-- 継続メッセージは `cursor`、`chainRunId`、`chunkNo`、`businessDate` を保持する。即時再試行はCloudflare推奨のretryable allowlistだけを指数バックオフ+full jitterで行い、overload/timeout/CPU/memoryは即時再試行せずQueue再配信へ委ねる。書込結果不明時は状態/versionをM-006経由で再読込してから判断する。
-- D1の順序付きplaceholderは `?1`〜`?100`、欠番なしとし、定義済みbind数と `.bind(...)` 引数数を一致させる。
+- `env.DB`、D1 Workers Binding API、SQL実行はM-006 D1データアクセスだけに限定し、APIはログイン以外をM-002、ログインをM-003へ、JOBはM-002へ委譲する。
+- 技術基盤の確定前提とデータアクセス境界は§0.2・§0.3、JOB固定値（チャンク上限・Statement内部予算/上限・Queue設定・再配信）は§7、`?1`〜`?100`の連番bindとD1実行上限は§9を正本とする。本節は概観のみを示し、固定値は再記載しない。
 
 ## 収録文書（設計種別別）
 

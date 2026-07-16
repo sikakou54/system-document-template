@@ -29,11 +29,11 @@ jobs:
           folder-path: 'テンプレート'
           file-path: './テンプレート_統合設計書.md'
           file-extension: '.md'
-      - name: Check root README links
+      - name: Check root README and CLAUDE.md links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           use-quiet-mode: 'yes'
           use-verbose-mode: 'yes'
           config-file: '.github/workflows/mlc_config.json'
-          file-path: './README.md'
+          file-path: './README.md, ./CLAUDE.md'
           file-extension: '.md'
