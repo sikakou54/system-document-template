@@ -2,7 +2,7 @@
 
 <!-- 本節は統合設計書「7. JOB設計」の詳細テンプレート。Cloudflare Workers Paid、Cloudflare Queues、Cloudflare D1を前提とし、Cron→scheduledハンドラー→Queue→queueハンドラー→JOB本体→M-002の40件単位処理を定義する。 -->
 <!-- JOBハンドラーとJOB本体はCloudflare D1、env.DB、D1 API、物理データ構造、SQL、M-006へ直接アクセスしない。queueハンドラーはJOB本体を1回呼び、JOB本体からM-002の公開IFへデータ処理を委譲する。 -->
-<!-- JOBの存在・正式名称とCron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB→M-002の接続順は§3.1・§3.1.1を構成上の正本とし、本章ではイベント・メッセージ・ハンドラー処理を詳細化する。 -->
+<!-- JOBの存在・正式名称とCron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB→M-002の接続順は§3.1・§3.1.2を構成上の正本とし、本章ではイベント・メッセージ・ハンドラー処理を詳細化する。 -->
 
 # 7. JOB設計
 

@@ -4,7 +4,7 @@
 
 ## 7.1 JOB設計方針
 
-- JOBの存在・正式名称と「Cron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB-001→M-002」の接続順は§3.1・§3.1.1を構成上の正本とし、本章はイベント、メッセージ、ハンドラー処理を詳細化する。
+- JOBの存在・正式名称と「Cron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB-001→M-002」の接続順は§3.1・§3.1.2を構成上の正本とし、本章はイベント、メッセージ、ハンドラー処理を詳細化する。
 - JOB-001は本番のCloudflare Workers Paidで実行する。Cron Triggerを受ける`scheduled`ハンドラーは初回メッセージをCloudflare Queuesへ投入するだけとし、`queue`ハンドラーはメッセージ検証後にJOB-001本体を1回呼ぶ。JOB-001本体がM-002/IF-07へ40社員以下の1チャンクを委譲する。
 - `scheduled`・`queue`の両ハンドラーからD1 Binding `env.DB`、永続化層、物理データ構造、Prepared Statement、`batch()`、トランザクションAPIへ直接アクセスすることを禁止する。
 - データの抽出・更新はM-002 社員管理アプリケーションの公開処理へ委譲する。`queue`ハンドラーは1メッセージにつきJOB-001本体を1回、JOB-001本体はM-002/IF-07を1回だけ呼び、いずれも社員単位のループを持たない。
