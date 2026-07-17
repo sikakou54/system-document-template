@@ -9,7 +9,7 @@
 ## 7.1 JOB設計方針
 
 - 本番基盤はCloudflare Workers Paid + Cloudflare D1 + Cloudflare Queuesで固定する。
-- Cron Triggerの `scheduled()` handlerは初回Queue messageを生成・投入するだけとし、対象取得、業務処理、M-002呼出、D1処理を行わない。認証済みの手動再実行も同じ初回message投入経路を使用する。
+- Cron Triggerの `scheduled()` handlerは初回Queue messageを生成・投入するだけとし、対象取得、業務処理、M-002呼出、D1処理を行わない。JOBの起動契機はCron Triggerだけとし、認証済み手動入口などの追加起動経路は設けない。
 - Queuesの`queue()`ハンドラーは1 messageにつき定義済みJOB本体をちょうど1回呼び、JOB本体はM-002の指定公開IFをちょうど1回呼び出す。ハンドラーとJOB本体は対象を反復せず、対象抽出・個別更新・D1原子実行をM-002以下へ委譲する。
 - 1チャンクの対象上限は40件、D1 Statement内部予算は1 Worker invocation当たり900件とする。Paid planのhard limit 1,000件との差100件は制御、状態再読込み、障害確認用に残し、正常処理で使い切らない。
 - D1 Statement数はM-002以下で、`batch()`内の各Statement、状態/version再読込み、即時再試行を各1件として実測し、JOB本体を介してqueueハンドラーへ論理結果として返す。queueハンドラーは900超過を契約違反として扱う。
@@ -24,7 +24,7 @@
 
 | JOB-ID | JOB名 | 目的 | 起動・継続経路 | 唯一の業務呼出先 |
 |---|---|---|---|---|
-| JOB-XXX | XXX JOB | <目的> | `scheduled()` / 手動 → 初回Queue投入 → `queue()`ハンドラー → JOB本体 → 継続Queue | M-002/IF-XX（JOB本体が1 messageにつき1回。scheduled/queueハンドラーは直接呼ばない） |
+| JOB-XXX | XXX JOB | <目的> | `scheduled()` → 初回Queue投入 → `queue()`ハンドラー → JOB本体 → 継続Queue | M-002/IF-XX（JOB本体が1 messageにつき1回。scheduled/queueハンドラーは直接呼ばない） |
 
 <!-- 7.3のブロックをJOB-IDごとに複製する。処理フローの番号・名称は処理詳細と完全一致させる。 -->
 ## 7.3 JOB-XXX XXX JOB
@@ -36,32 +36,31 @@
 | JOB-ID / JOB名 | JOB-XXX / XXX JOB |
 | 目的 / トレース元 | <目的> / UC-XXX・§3.x |
 | 本番基盤 | Cloudflare Workers Paid + Cloudflare D1 + Cloudflare Queues |
-| Workers handler | `scheduled()`（初回message投入のみ） / `queue()`（JOB本体呼出・ack/retry・継続制御） / 認証済み手動入口（初回message投入のみ） |
+| Workers handler | `scheduled()`（初回message投入のみ） / `queue()`（JOB本体呼出・ack/retry・継続制御） |
 | Cron Trigger | <Trigger名>、UTC Cron式、UTC予定時刻、業務IANAタイムゾーン、`controller.scheduledTime`からbusinessDateを確定する規則 |
 | Queue / consumer | <Queue名> / <consumer名> |
 | Queue設定 | `max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、`dead_letter_queue="<DLQ名>"`。環境別Wrangler設定を§12と一致させる |
 | チャンク上限 | 最大40対象 / Queue message。40件またはD1 Statement実測900件の先に達した方で終了する |
 | D1 Statement上限 | 内部予算900 / Worker invocation、Workers Paid hard limit 1,000。100件を予約する |
-| 多重・重複制御 | `chainRunId + chunkNo`を冪等キーとし、Queueのat-least-once配信、次message投入後の現message再配信、手動再実行をM-002以下で安全に判定する |
+| 多重・重複制御 | `chainRunId + chunkNo`を冪等キーとし、Queueのat-least-once配信、次message投入後の現message再配信、Cron再送をM-002以下で安全に判定する |
 | 呼出モジュール / 公開IF | M-002 XXXアプリケーション / M-002/IF-XX `<チャンク処理名>` |
 | 禁止事項 | JOBからM-006、D1、`env.DB`、D1 API、SQL、物理表へ直接アクセスしない |
 
 ### 7.3.2 起動パラメータ・継続message
 
-#### scheduled / 手動入力
+#### scheduled入力
 
 | 項目 | 型 | 必須 | 値・検証 |
 |---|---|---:|---|
-| scheduledTime | Integer | Cron時Yes | `controller.scheduledTime`（UTC epoch ms）。Cron式と許容時間差を検証する |
-| businessDate | String | Yes | `YYYY-MM-DD`。Cron時はscheduledTimeと業務IANAタイムゾーンから一意に確定し、手動時は明示指定・認可する |
-| rerunKey | String | 手動時Yes | 手動再実行を元chainと区別または関連付ける安定キー。空文字・再利用規則を定義する |
+| scheduledTime | Integer | Yes | `controller.scheduledTime`（UTC epoch ms）。Cron式と許容時間差を検証する |
+| businessDate | String | Yes | `YYYY-MM-DD`。scheduledTimeと業務IANAタイムゾーンから一意に確定する |
 
 #### Queue message body
 
 | 項目 | 型 | 必須 | 初回 | 継続・検証規則 |
 |---|---|---:|---|---|
 | cursor | String / null | Yes | `null` | M-002が返したopaqueな次cursor。JOBは分解・改変しない |
-| chainRunId | String | Yes | JOB-ID、businessDate、scheduledTimeまたはrerunKeyから安定採番 | 全チャンクで不変。長さ・文字集合・採番衝突を検証する |
+| chainRunId | String | Yes | JOB-ID、businessDate、scheduledTimeから安定採番 | 全チャンクで不変。長さ・文字集合・採番衝突を検証する |
 | chunkNo | Integer | Yes | `1` | 前messageのchunkNo + 1。1以上の安全整数かつ上限を定義する |
 | businessDate | String | Yes | 確定済み業務日 | 全チャンクで不変、`YYYY-MM-DD`、再配信でも再計算しない |
 
@@ -91,7 +90,7 @@ flowchart TD
     End([終了])
 
     Start --> P1
-    P1 -- "scheduled / 手動・正常" --> P2 --> P3
+    P1 -- "scheduled・正常" --> P2 --> P3
     P3 -- "投入成功" --> End
     P1 -- "queue・正常" --> P4
     P4 -- "正常" --> P5 --> P6
@@ -110,21 +109,21 @@ flowchart TD
 
 #### (1) 起動種別・入力検証処理
 
-- handler種別をscheduled、queue、認証済み手動のいずれかへ一意に分類する。
-- scheduledはCron式、scheduledTime、業務IANAタイムゾーンからbusinessDateを確定する。手動は実行権限、businessDate、rerunKeyを検証する。
+- handler種別をscheduled、queueのいずれかへ一意に分類する。手動入口など追加の起動経路は設けない。
+- scheduledはCron式、scheduledTime、業務IANAタイムゾーンからbusinessDateを確定する。
 - queueはbatch内message数が1件であることを確認し、(4)へ渡す。
-- 不正入力ではM-002を呼ばず、(10)へ進む。scheduled/manualから業務処理へ直接分岐してはならない。
+- 不正入力ではM-002を呼ばず、(10)へ進む。scheduledから業務処理へ直接分岐してはならない。
 
 #### (2) 初回メッセージ生成処理
 
 | 項目 | 設定値 |
 |---|---|
 | cursor | `null` |
-| chainRunId | JOB-ID、businessDate、scheduledTimeまたはrerunKeyから安定・一意に採番 |
+| chainRunId | JOB-ID、businessDate、scheduledTimeから安定・一意に採番 |
 | chunkNo | `1` |
 | businessDate | (1)で確定した値 |
 
-同じCron eventまたは同じ手動rerunKeyからは同じchainRunIdを再生成し、Queue投入の再試行で別chainを作らない。
+同じCron eventからは同じchainRunIdを再生成し、Queue投入の再試行で別chainを作らない。
 
 #### (3) 初回メッセージ投入・終了処理
 
@@ -209,8 +208,8 @@ flowchart TD
 | 過負荷 / Worker timeout / CPU超過 / memory超過 | しない | Queue redelivery。最大再試行後DLQ |
 | 業務エラー / schema不正 / 恒久設定不備 | しない | 無限再配信しない。ackして運用隔離するか、明示的にDLQへ送る方式を完成版で一意に定義 |
 | M-002結果の契約違反 / 40件・900 Statement超過 | しない | 現messageを正常ackせず運用隔離。再配信で解消しない場合のDLQ送付方式を完成版で固定 |
-| scheduled / 手動の入力不正 | しない | Queueへ投入せず実行失敗を返し、監査・アラート |
-| scheduled / 手動の初回投入失敗 | しない（producer SDK/基盤の安全な再試行規則がある場合だけ別途定義） | 実行失敗を返しアラート。同じchainRunIdで再実行 |
+| scheduledの入力不正 | しない | Queueへ投入せず実行失敗を返し、監査・アラート |
+| scheduledの初回投入失敗 | しない（producer SDK/基盤の安全な再試行規則がある場合だけ別途定義） | 実行失敗を返しアラート。同じchainRunIdで再実行 |
 
 Queue retry時は例外を握りつぶさず、redelivery対象messageを成功ackしない。DLQの監視、調査、businessDate固定の再投入、重複安全性、復旧承認者を§12へ定義する。
 
@@ -223,7 +222,7 @@ Queue retry時は例外を握りつぶさず、redelivery対象messageを成功a
 | チャンク冪等性 | `chainRunId + chunkNo`の一意性、対象version、業務冪等キーをM-002/M-006で保証する |
 | 継続順序 | 現チャンク確定 → 次message投入確定 → 現message ack。途中障害による重複は冪等キーで無害化する |
 | statement予算 | maxItems=40、statementBudget=900。再読込み・即時再試行を含む実測値を返し、1,000へ到達させない |
-| 多重起動 | `max_concurrency=1`に加え、異なるconsumer/手動再投入も想定して永続的冪等性で防ぐ。設定だけを排他保証としない |
+| 多重起動 | `max_concurrency=1`に加え、異なるconsumer/Queue再配信も想定して永続的冪等性で防ぐ。設定だけを排他保証としない |
 
 ### 7.3.7 監視・運用
 
