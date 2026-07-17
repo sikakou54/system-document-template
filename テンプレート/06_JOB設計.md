@@ -1,12 +1,12 @@
 [← テンプレート一覧](README.md)
 
-<!-- 本節は統合設計書「7. JOB設計」の詳細テンプレート。Cloudflare Workers Paid、Cloudflare Queues、Cloudflare D1を前提とし、Cron→scheduledハンドラー→Queue→queueハンドラー→JOB本体→M-002の40件単位処理を定義する。 -->
+<!-- 本節は統合設計書「6. JOB設計」の詳細テンプレート。Cloudflare Workers Paid、Cloudflare Queues、Cloudflare D1を前提とし、Cron→scheduledハンドラー→Queue→queueハンドラー→JOB本体→M-002の40件単位処理を定義する。 -->
 <!-- JOBハンドラーとJOB本体はCloudflare D1、env.DB、D1 API、物理データ構造、SQL、M-006へ直接アクセスしない。queueハンドラーはJOB本体を1回呼び、JOB本体からM-002の公開IFへデータ処理を委譲する。 -->
-<!-- JOBの存在・正式名称とCron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB→M-002の接続順は§3.1・§3.1.2を構成上の正本とし、本章ではイベント・メッセージ・ハンドラー処理を詳細化する。 -->
+<!-- JOBの存在・正式名称とCron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB→M-002の接続順は§6.2 JOB一覧を構成上の正本とし、本章ではイベント・メッセージ・ハンドラー処理を詳細化する。 -->
 
-# 7. JOB設計
+# 6. JOB設計
 
-## 7.1 JOB設計方針
+## 6.1 JOB設計方針
 
 - 本番基盤はCloudflare Workers Paid + Cloudflare D1 + Cloudflare Queuesで固定する。
 - Cron Triggerの `scheduled()` handlerは初回Queue messageを生成・投入するだけとし、対象取得、業務処理、M-002呼出、D1処理を行わない。JOBの起動契機はCron Triggerだけとし、認証済み手動入口などの追加起動経路は設けない。
@@ -20,33 +20,33 @@
 - 必須のQueue投入とM-002呼出を完了までawaitする。必須処理を未完了のまま `ctx.waitUntil()` へ退避して終了またはackしない。
 - `scheduled`ハンドラーへはQueue producerだけ、`queue`ハンドラーへはJOB本体だけ、JOB本体へはM-002公開IFだけを注入し、いずれにも`env.DB`、D1オブジェクト、SQL-ID、TBL-ID、M-006を渡さない。
 
-## 7.2 JOB一覧
+## 6.2 JOB一覧
 
 | JOB-ID | JOB名 | 目的 | 起動・継続経路 | 唯一の業務呼出先 |
 |---|---|---|---|---|
 | JOB-XXX | XXX JOB | <目的> | `scheduled()` → 初回Queue投入 → `queue()`ハンドラー → JOB本体 → 継続Queue | M-002/IF-XX（JOB本体が1 messageにつき1回。scheduled/queueハンドラーは直接呼ばない） |
 
 <!-- 7.3のブロックをJOB-IDごとに複製する。処理フローの番号・名称は処理詳細と完全一致させる。 -->
-## 7.3 JOB-XXX XXX JOB
+## 6.3 JOB-XXX XXX JOB
 
-### 7.3.1 基本情報
+### 6.3.1 基本情報
 
 | 項目 | 内容 |
 |---|---|
 | JOB-ID / JOB名 | JOB-XXX / XXX JOB |
-| 目的 / トレース元 | <目的> / UC-XXX・§3.x |
+| 目的 / トレース元 | <目的> / UC-XXX |
 | 本番基盤 | Cloudflare Workers Paid + Cloudflare D1 + Cloudflare Queues |
 | Workers handler | `scheduled()`（初回message投入のみ） / `queue()`（JOB本体呼出・ack/retry・継続制御） |
 | Cron Trigger | <Trigger名>、UTC Cron式、UTC予定時刻、業務IANAタイムゾーン、`controller.scheduledTime`からbusinessDateを確定する規則 |
 | Queue / consumer | <Queue名> / <consumer名> |
-| Queue設定 | `max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、`dead_letter_queue="<DLQ名>"`。環境別Wrangler設定を§12と一致させる |
+| Queue設定 | `max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、`dead_letter_queue="<DLQ名>"`。環境別Wrangler設定を§11と一致させる |
 | チャンク上限 | 最大40対象 / Queue message。40件またはD1 Statement実測900件の先に達した方で終了する |
 | D1 Statement上限 | 内部予算900 / Worker invocation、Workers Paid hard limit 1,000。100件を予約する |
 | 多重・重複制御 | `chainRunId + chunkNo`を冪等キーとし、Queueのat-least-once配信、次message投入後の現message再配信、Cron再送をM-002以下で安全に判定する |
 | 呼出モジュール / 公開IF | M-002 XXXアプリケーション / M-002/IF-XX `<チャンク処理名>` |
 | 禁止事項 | JOBからM-006、D1、`env.DB`、D1 API、SQL、物理表へ直接アクセスしない |
 
-### 7.3.2 起動パラメータ・継続message
+### 6.3.2 起動パラメータ・継続message
 
 #### scheduled入力
 
@@ -66,13 +66,13 @@
 
 Queue envelopeのmessage IDとdelivery attemptは相関・運用判定だけに用いる。業務冪等性はbodyの `chainRunId + chunkNo`で保証し、配信ごとに変わり得る値へ依存しない。
 
-### 7.3.3 処理対象
+### 6.3.3 処理対象
 
 | 対象 | 抽出条件 | 除外条件 | 処理単位・順序 |
 |---|---|---|---|
 | <論理対象> | M-002/IF-XXでbusinessDateとcursorから決定 | M-002の業務条件で決定 | 安定順の最大40件。JOBは対象ID一覧、物理条件、内部cursorを生成しない |
 
-### 7.3.4 処理フロー
+### 6.3.4 処理フロー
 
 ```mermaid
 flowchart TD
@@ -105,7 +105,7 @@ flowchart TD
     P10 --> End
 ```
 
-### 7.3.5 処理詳細
+### 6.3.5 処理詳細
 
 #### (1) 起動種別・入力検証処理
 
@@ -162,13 +162,13 @@ flowchart TD
 
 | M-002公開例外 | 発生条件 | retryable | (10)の扱い |
 |---|---|---:|---|
-| `<BUSINESS_EXCEPTION>` | §8の公開IFと同一 | No | 業務失敗を記録しack / 手動対応。要件に応じた扱いを一意に記載 |
+| `<BUSINESS_EXCEPTION>` | §7の公開IFと同一 | No | 業務失敗を記録しack / 手動対応。要件に応じた扱いを一意に記載 |
 | `<RETRYABLE_TEMPORARY>` | allowlist即時再試行後も一時障害 | Yes | 例外を返してQueue redelivery |
 | `<WRITE_OUTCOME_UNRESOLVED>` | 状態/version再読込みでも確定不能 | Yes | 同一invocationで書込みを再送せずQueue redelivery |
 | `<PLATFORM_OVERLOAD_OR_LIMIT>` | 過負荷、timeout、CPU、memory等 | Yes | 即時再試行せずQueue redelivery |
 | `<NON_RETRYABLE_SYSTEM>` | 設定不備、契約違反、恒久障害 | No | ack可否とDLQ/運用隔離を具体化 |
 
-完成版では§8の当該M-002公開IFが宣言する全例外を、本表へ重複なくちょうど1回割り当てる。
+完成版では§7の当該M-002公開IFが宣言する全例外を、本表へ重複なくちょうど1回割り当てる。
 
 #### (6) チャンク結果判定処理
 
@@ -211,9 +211,9 @@ flowchart TD
 | scheduledの入力不正 | しない | Queueへ投入せず実行失敗を返し、監査・アラート |
 | scheduledの初回投入失敗 | しない（producer SDK/基盤の安全な再試行規則がある場合だけ別途定義） | 実行失敗を返しアラート。同じchainRunIdで再実行 |
 
-Queue retry時は例外を握りつぶさず、redelivery対象messageを成功ackしない。DLQの監視、調査、businessDate固定の再投入、重複安全性、復旧承認者を§12へ定義する。
+Queue retry時は例外を握りつぶさず、redelivery対象messageを成功ackしない。DLQの監視、調査、businessDate固定の再投入、重複安全性、復旧承認者を§11へ定義する。
 
-### 7.3.6 D1原子実行・冪等性・継続性
+### 6.3.6 D1原子実行・冪等性・継続性
 
 | 観点 | 設計 |
 |---|---|
@@ -224,7 +224,7 @@ Queue retry時は例外を握りつぶさず、redelivery対象messageを成功a
 | statement予算 | maxItems=40、statementBudget=900。再読込み・即時再試行を含む実測値を返し、1,000へ到達させない |
 | 多重起動 | `max_concurrency=1`に加え、異なるconsumer/Queue再配信も想定して永続的冪等性で防ぐ。設定だけを排他保証としない |
 
-### 7.3.7 監視・運用
+### 6.3.7 監視・運用
 
 | 観点 | 必須設計 |
 |---|---|
@@ -232,4 +232,4 @@ Queue retry時は例外を握りつぶさず、redelivery対象messageを成功a
 | アラート | 初回投入失敗、連続chunk失敗、statementCount予算超過、Queue滞留、`max_retries=3`到達/DLQ、未完了chain、timeout/CPU/memory失敗 |
 | 相関 | JOB-ID、chainRunId、chunkNo、businessDate、message ID、traceIdを全handler・M-002結果で相関する |
 | DLQ復旧 | 原因除去、状態/version確認、businessDate固定、同一chainRunId/適切なchunkNoでの再投入、二重反映検証、承認・証跡 |
-| 設定同期 | WranglerのCron UTC式、producer/consumer binding、`max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、DLQを§12・環境設定・試験で正逆照合する |
+| 設定同期 | WranglerのCron UTC式、producer/consumer binding、`max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、DLQを§11・環境設定・試験で正逆照合する |
