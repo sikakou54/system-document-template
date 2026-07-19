@@ -4,7 +4,7 @@
 
 ## 6.1 JOB設計方針
 
-- JOBの存在・正式名称は§6.2 JOB一覧を構成上の正本とし、本章は「Cron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB-001→M-002」の接続順、イベント、メッセージ、ハンドラー処理を詳細化する。
+- JOBの存在・正式名称は[JOB一覧](06_JOB設計.md#62-job一覧)を構成上の正本とし、本章は「Cron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB-001→M-002」の接続順、イベント、メッセージ、ハンドラー処理を詳細化する。
 - JOB-001は本番のCloudflare Workers Paidで実行する。Cron Triggerを受ける`scheduled`ハンドラーは初回メッセージをCloudflare Queuesへ投入するだけとし、`queue`ハンドラーはメッセージ検証後にJOB-001本体を1回呼ぶ。JOB-001本体がM-002/IF-07へ40社員以下の1チャンクを委譲する。
 - `scheduled`・`queue`の両ハンドラーからD1 Binding `env.DB`、永続化層、物理データ構造、Prepared Statement、`batch()`、トランザクションAPIへ直接アクセスすることを禁止する。
 - データの抽出・更新はM-002 社員管理アプリケーションの公開処理へ委譲する。`queue`ハンドラーは1メッセージにつきJOB-001本体を1回、JOB-001本体はM-002/IF-07を1回だけ呼び、いずれも社員単位のループを持たない。
@@ -187,7 +187,7 @@ M-002が`VALIDATION_ERROR`を返した場合は恒久エラー、retryableな`DA
 | Queue Producer | `scheduled`・`queue`ハンドラーだけにQueue Producer Bindingを付与する。DB権限とは分離する |
 | Queue Consumer | `max_batch_size=1`、`max_concurrency=1`、`max_retries=3`。1 MessageBatchでM-002呼出しは最大1回 |
 | DLQ | JOB-001専用DLQを指定し、滞留1件以上で即時通知する。再投入時はメッセージ本文を変更しない |
-| 一時障害 | §6.3.5(4)の許可リストだけをM-006内で即時再試行する。それ以外の基盤障害はQueue再配信へ委ねる |
+| 一時障害 | [処理詳細](06_JOB設計.md#635-処理詳細)(4)の許可リストだけをM-006内で即時再試行する。それ以外の基盤障害はQueue再配信へ委ねる |
 | 恒久業務エラー | 社員ID・エラー分類・試行回数だけを記録し、チャンク内の次社員へ進む。氏名、メール、電話番号をログへ出力しない |
 | 再開位置 | メッセージの退職日・社員IDカーソルから再開する。失敗社員は次回日次チェーンの未反映抽出でも再評価する |
 | 監視メトリクス | 初回投入成否、Queue遅延、配信試行回数、DLQ件数、チャンク所要時間、対象・成功・スキップ・失敗件数、後続有無、D1実行文数 |

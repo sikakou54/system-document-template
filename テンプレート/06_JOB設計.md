@@ -2,7 +2,7 @@
 
 <!-- 本節は統合設計書「6. JOB設計」の詳細テンプレート。Cloudflare Workers Paid、Cloudflare Queues、Cloudflare D1を前提とし、Cron→scheduledハンドラー→Queue→queueハンドラー→JOB本体→M-002の40件単位処理を定義する。 -->
 <!-- JOBハンドラーとJOB本体はCloudflare D1、env.DB、D1 API、物理データ構造、SQL、M-006へ直接アクセスしない。queueハンドラーはJOB本体を1回呼び、JOB本体からM-002の公開IFへデータ処理を委譲する。 -->
-<!-- JOBの存在・正式名称とCron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB→M-002の接続順は§6.2 JOB一覧を構成上の正本とし、本章ではイベント・メッセージ・ハンドラー処理を詳細化する。 -->
+<!-- JOBの存在・正式名称とCron Trigger→scheduledハンドラー→Queues→queueハンドラー→JOB→M-002の接続順は[JOB一覧](06_JOB設計.md#62-job一覧)を構成上の正本とし、本章ではイベント・メッセージ・ハンドラー処理を詳細化する。 -->
 
 # 6. JOB設計
 
@@ -39,7 +39,7 @@
 | Workers handler | `scheduled()`（初回message投入のみ） / `queue()`（JOB本体呼出・ack/retry・継続制御） |
 | Cron Trigger | <Trigger名>、UTC Cron式、UTC予定時刻、業務IANAタイムゾーン、`controller.scheduledTime`からbusinessDateを確定する規則 |
 | Queue / consumer | <Queue名> / <consumer名> |
-| Queue設定 | `max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、`dead_letter_queue="<DLQ名>"`。環境別Wrangler設定を§11と一致させる |
+| Queue設定 | `max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、`dead_letter_queue="<DLQ名>"`。環境別Wrangler設定を[詳細設計への引継ぎ事項](11_詳細設計への引継ぎ.md#11-詳細設計への引継ぎ事項)と一致させる |
 | チャンク上限 | 最大40対象 / Queue message。40件またはD1 Statement実測900件の先に達した方で終了する |
 | D1 Statement上限 | 内部予算900 / Worker invocation、Workers Paid hard limit 1,000。100件を予約する |
 | 多重・重複制御 | `chainRunId + chunkNo`を冪等キーとし、Queueのat-least-once配信、次message投入後の現message再配信、Cron再送をM-002以下で安全に判定する |
@@ -162,13 +162,13 @@ flowchart TD
 
 | M-002公開例外 | 発生条件 | retryable | (10)の扱い |
 |---|---|---:|---|
-| `<BUSINESS_EXCEPTION>` | §7の公開IFと同一 | No | 業務失敗を記録しack / 手動対応。要件に応じた扱いを一意に記載 |
+| `<BUSINESS_EXCEPTION>` | [モジュール設計](07_モジュール設計.md#7-モジュール設計)の公開IFと同一 | No | 業務失敗を記録しack / 手動対応。要件に応じた扱いを一意に記載 |
 | `<RETRYABLE_TEMPORARY>` | allowlist即時再試行後も一時障害 | Yes | 例外を返してQueue redelivery |
 | `<WRITE_OUTCOME_UNRESOLVED>` | 状態/version再読込みでも確定不能 | Yes | 同一invocationで書込みを再送せずQueue redelivery |
 | `<PLATFORM_OVERLOAD_OR_LIMIT>` | 過負荷、timeout、CPU、memory等 | Yes | 即時再試行せずQueue redelivery |
 | `<NON_RETRYABLE_SYSTEM>` | 設定不備、契約違反、恒久障害 | No | ack可否とDLQ/運用隔離を具体化 |
 
-完成版では§7の当該M-002公開IFが宣言する全例外を、本表へ重複なくちょうど1回割り当てる。
+完成版では[モジュール設計](07_モジュール設計.md#7-モジュール設計)の当該M-002公開IFが宣言する全例外を、本表へ重複なくちょうど1回割り当てる。
 
 #### (6) チャンク結果判定処理
 
@@ -211,7 +211,7 @@ flowchart TD
 | scheduledの入力不正 | しない | Queueへ投入せず実行失敗を返し、監査・アラート |
 | scheduledの初回投入失敗 | しない（producer SDK/基盤の安全な再試行規則がある場合だけ別途定義） | 実行失敗を返しアラート。同じchainRunIdで再実行 |
 
-Queue retry時は例外を握りつぶさず、redelivery対象messageを成功ackしない。DLQの監視、調査、businessDate固定の再投入、重複安全性、復旧承認者を§11へ定義する。
+Queue retry時は例外を握りつぶさず、redelivery対象messageを成功ackしない。DLQの監視、調査、businessDate固定の再投入、重複安全性、復旧承認者を[詳細設計への引継ぎ事項](11_詳細設計への引継ぎ.md#11-詳細設計への引継ぎ事項)へ定義する。
 
 ### 6.3.6 D1原子実行・冪等性・継続性
 
@@ -232,4 +232,4 @@ Queue retry時は例外を握りつぶさず、redelivery対象messageを成功a
 | アラート | 初回投入失敗、連続chunk失敗、statementCount予算超過、Queue滞留、`max_retries=3`到達/DLQ、未完了chain、timeout/CPU/memory失敗 |
 | 相関 | JOB-ID、chainRunId、chunkNo、businessDate、message ID、traceIdを全handler・M-002結果で相関する |
 | DLQ復旧 | 原因除去、状態/version確認、businessDate固定、同一chainRunId/適切なchunkNoでの再投入、二重反映検証、承認・証跡 |
-| 設定同期 | WranglerのCron UTC式、producer/consumer binding、`max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、DLQを§11・環境設定・試験で正逆照合する |
+| 設定同期 | WranglerのCron UTC式、producer/consumer binding、`max_batch_size=1`、`max_concurrency=1`、`max_retries=3`、DLQを[詳細設計への引継ぎ事項](11_詳細設計への引継ぎ.md#11-詳細設計への引継ぎ事項)・環境設定・試験で正逆照合する |
