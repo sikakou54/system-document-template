@@ -181,7 +181,7 @@
         </section>
       </div>
 
-      <section class="card compact mb-0">
+      <section class="card compact">
         <div class="card-title-row">
           <div>
             <h2 class="card-title">4. 更新内容</h2>
@@ -215,6 +215,42 @@
           <div class="form-actions">
             <button class="btn ghost" type="button"><span class="itm">ITM-11</span>編集取消</button>
             <button class="btn primary" type="button"><span class="itm">ITM-10</span>ロール更新</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card compact mb-0">
+        <div class="card-title-row">
+          <div>
+            <h2 class="card-title">5. 利用者アカウント操作</h2>
+            <div class="card-note mt-12">アカウントの発行・利用停止・再有効化を行います。発行したアカウントのロールは「4. 更新内容」で割り当てるまで未割当です。</div>
+          </div>
+          <span class="badge success">アカウント有効</span>
+        </div>
+        <div class="grid cols-4">
+          <div class="field">
+            <label><span class="itm">ITM-17</span>アカウント操作区分</label>
+            <div class="control select">利用停止</div>
+            <div class="help">発行／利用停止／再有効化から選択します。</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-18</span>外部認証主体 <span class="req">発行時必須</span></label>
+            <div class="control"><span class="placeholder">taro.yamada@example.invalid</span></div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-19</span>対応社員</label>
+            <div class="control">E-1042　山田 太郎</div>
+            <div class="help">未指定は社員外管理者として発行します。</div>
+          </div>
+          <div class="field">
+            <label><span class="itm">ITM-20</span>対象アカウント</label>
+            <div class="control">taro.yamada（有効）</div>
+          </div>
+        </div>
+        <div class="inline-bar mt-12">
+          <div class="muted"><strong>反映確認:</strong> 利用停止すると対象利用者は以後ログインできません。</div>
+          <div class="form-actions">
+            <button class="btn primary" type="button"><span class="itm">ITM-21</span>アカウント反映</button>
           </div>
         </div>
       </section>
